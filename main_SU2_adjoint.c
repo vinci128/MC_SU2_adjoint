@@ -2,6 +2,7 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "ranlxd.h"
 #include "complex.h"
 #include "global.h"
@@ -53,8 +54,22 @@ phif.open ("phi.dat");
 std::ofstream logf;
 logf.open ("log.dat");
 
+std::ifstream inputf;
+inputf.open(argv[1]);
 
+std::string line;
 
+ if (inputf.is_open())
+  {
+    while ( getline (inputf,line) )
+    {
+	    std::cout << line << '\n';
+    }
+    inputf.close();
+  }
+
+std::ofstream outf;
+outf.open(argv[2]);
 
 // Parameters that determine the evolution
 
@@ -146,3 +161,4 @@ logf.close();
 logf << "Exiting program \n";
 
 }
+

@@ -10,6 +10,13 @@
 
 #define __global_h__
 
+typedef struct{
+  int N;
+  double b;
+  double k;
+  double l;
+} input;
+
 #define Ng 3
 #define Nd 4
 #define Nx 2
