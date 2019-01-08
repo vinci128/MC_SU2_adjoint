@@ -105,7 +105,7 @@ su2_x U_old[V][Nd];
 double phi_old[V][Ng];
 
 for(int i=0;i< n_meas;i++){
-cycle(5,multihit,1,n_decorr,logf);	
+cycle(5,multihit,1,n_decorr,logf);
 
 U_copy(U_old,U);
 phi_copy(phi_old,phi);
@@ -125,15 +125,9 @@ U_copy(U,U_smear);
 phi_copy(phi,phi_smear);
 
 }
-
-
 U_copy(U,U_old);
 
 phi_copy(phi,phi_old);
-
-
-
-
 
 sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
 sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
