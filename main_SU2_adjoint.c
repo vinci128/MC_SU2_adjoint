@@ -2,7 +2,6 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
-#include <string>
 #include "ranlxd.h"
 #include "complex.h"
 #include "global.h"
@@ -21,6 +20,7 @@
  double phi[V][Ng];
  double phi_smear[V][Ng];
  double phi_new[V][Ng];
+ extern input in;
 
 // Variables for the calculation of the acceptance rate
 
@@ -57,16 +57,19 @@ logf.open ("log.dat");
 std::ifstream inputf;
 inputf.open(argv[1]);
 
-std::string line;
-
  if (inputf.is_open())
   {
-    while ( getline (inputf,line) )
-    {
-	    std::cout << line << '\n';
-    }
+inputf >> in.N;
+inputf >> in.b;
+inputf >> in.k;
+inputf >> in.l;
+}
+   
     inputf.close();
-  }
+
+    beta = in.b;
+    kappa = in.k;
+    lambda = in.l;
 
 std::ofstream outf;
 outf.open(argv[2]);
@@ -81,7 +84,6 @@ int n_smear = 5;
 //int meas_freq = 10;
 //int save_freq = 1000;
 int n_run =1;
-
 // Filename for configuration files
 
 
@@ -161,4 +163,3 @@ logf.close();
 logf << "Exiting program \n";
 
 }
-

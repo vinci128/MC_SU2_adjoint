@@ -16,9 +16,11 @@ double op=0;
 double eta;
 double eps = 0.2;
 
-double lambda = 0.0011;
-double kappa =  0.2892;
-double beta = 1.5;
+double lambda ;
+double kappa ;
+double beta ;
+
+input in;
 
  void cold_start(){
 
