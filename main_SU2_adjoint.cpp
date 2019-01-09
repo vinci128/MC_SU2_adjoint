@@ -49,13 +49,12 @@ read_input(argv);
 
 V=Nx*Ny*Nz*Nt;
 
-
 alloc_fields();
 
 fillneigh();
 
 std::ofstream outf;
-outf.open(argv[2]);
+outf.open(argv[2],ios::out|ios:binary);
 
 // Parameters that determine the evolution
 
@@ -117,12 +116,17 @@ phif  << "no_smear: " << phi_sq()  <<"\n";
 
 for(int k =0; k < n_smear; k++){
 
+  double B[Nt][3];
+
 APE_smearing(U_smear,U, 0.55);
 APE_smearing_scalar(phi_smear,phi,U);
 
 plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
 
 phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
+
+outf.write( (char*)&B, sizeof(B));
+
 U_copy(U,U_smear);
 phi_copy(phi,phi_smear);
 
@@ -139,12 +143,12 @@ write_adjoint_field(adjoint_name);
 
 }
 
+logf << "Exiting program \n";
 
 
 plaqf.close();
 phif.close();
 logf.close();
-
-logf << "Exiting program \n";
+outf.close();
 
 }

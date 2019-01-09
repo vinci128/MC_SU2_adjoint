@@ -41,6 +41,7 @@ void read_input(char *argv[]){
 
       inputf.close();
 
+
 }
 
 void alloc_fields(){
