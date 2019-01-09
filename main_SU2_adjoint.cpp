@@ -125,6 +125,7 @@ plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
 
 phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
+B_t(B);
 outf.write( (char*)&B, sizeof(B));
 
 U_copy(U,U_smear);
