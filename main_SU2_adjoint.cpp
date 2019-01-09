@@ -54,13 +54,13 @@ alloc_fields();
 fillneigh();
 
 std::ofstream outf;
-outf.open(argv[2],ios::out|ios:binary);
+outf.open(argv[2],std::ios::out|std::ios::binary);
 
 // Parameters that determine the evolution
 
-int therm = 1000;
-int n_meas = 1000;
-int n_decorr = 20;
+int therm = 1;
+int n_meas = 1;
+int n_decorr = 1;
 int multihit = 10;
 int n_smear = 5;
 //int meas_freq = 10;
@@ -151,5 +151,6 @@ plaqf.close();
 phif.close();
 logf.close();
 outf.close();
+
 
 }

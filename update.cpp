@@ -194,7 +194,7 @@ _su2_null(St);
 
 // we calculate here the sum of the staples
 
-for(int nu =0 ; nu < Nd; nu++){
+for(int nu =0 ; nu < 3; nu++){
 if(nu == mu) continue;
 //logf << "a " << mu << std::endl;
   su2_x Unu,Umu,Unu_adj,Umu_adj,Upmu;

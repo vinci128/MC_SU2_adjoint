@@ -19,7 +19,7 @@ void APE_smearing(su2_x **out, su2_x **in, double alpha)
 double det;
 for(int s =0; s < V;s++){
 
-  for(int mu =0; mu<4; mu++ ) {
+  for(int mu =0; mu<3; mu++ ) {
 
 su2_x W,W_dag;
 
@@ -68,7 +68,7 @@ sm[mu] = neig[s][Nd+mu];
   }
 
 
-for (int mu = 0; mu < 4; mu++) {
+for (int mu = 0; mu < 3; mu++) {
 
   _su2_x_represent(Um[mu],gauge[s][mu]); // U_mu(x)^(n-1)
 

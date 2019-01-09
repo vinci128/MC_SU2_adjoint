@@ -147,3 +147,24 @@ for(int s=0; s < V; s++ ){
   infile.close();
 
 }
+
+void read_B(char *argv[]){
+
+double B[n_smear][Nt][3];
+
+std::ifstream InFile;
+InFile.open(argv[2], std::ios::in | std::ios::binary);
+    for (int j = 0; j < n_smear; j++) {
+for (int t = 0; t < Nt; t++) {
+  for (int k = 0; k < 3; k++) {
+
+  InFile.read( (char*)&B[j][t][k], sizeof(double));
+  std::cout << B[j][t][k] << " " ;
+    }
+    std::cout  << '\n';
+  }
+  std::cout  << '\n';
+}
+std::cout  << '\n';
+  InFile.close();
+}
