@@ -16,8 +16,8 @@
 #define __APE_smaering_h__
 
 
-void APE_smearing(su2_x out[][Nd], su2_x in[][Nd], double alpha);
+void APE_smearing(su2_x **out, su2_x **in, double alpha);
 
-void APE_smearing_scalar(double out[][Ng], double in[][Ng], su2_x gauge[][Nd]) ;
+void APE_smearing_scalar(double **out, double **in, su2_x **gauge) ;
 
 #endif

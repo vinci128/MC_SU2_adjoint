@@ -20,7 +20,6 @@ double lambda ;
 double kappa ;
 double beta ;
 
-input in;
 
  void cold_start(){
 
@@ -46,10 +45,7 @@ input in;
 }
 
  void hot_start(){
-
-
-
-// Initialization of the fields U_mu(x) = x_0 id + i x_i sigma_i , phi(x) = phi^a(x) T^a 
+// Initialization of the fields U_mu(x) = x_0 id + i x_i sigma_i , phi(x) = phi^a(x) T^a
 
   for(int s=0; s < V; s++){
 
@@ -112,11 +108,9 @@ for (int k = 1; k < 4; ++k)
 
 _su2_times_su2(U_new[s][mu],X[s][mu],U[s][mu]);
 
-
-
 }
 
-su2_x staple(int s, int mu,int neig[V][8]){
+su2_x staple(int s, int mu){
 
   int sp[Nd];
 int sm[Nd];
@@ -180,7 +174,7 @@ return St;
 
 }
 
-su2_x staple_in(su2_x in[][Nd],int s, int mu,int neig[V][8]){
+su2_x staple_in(su2_x **in,int s, int mu){
 
   int sp[Nd];
 int sm[Nd];
@@ -244,7 +238,7 @@ return St;
 
 }
 
-double gauge_DeltaS(int s,int mu,su2_x St,double beta,double kappa,int neig[V][8]){
+double gauge_DeltaS(int s,int mu,su2_x St,double beta,double kappa){
 
   // We generate arrays of the neighbours to the site s
 
@@ -352,7 +346,7 @@ phi_new[s][a] = phi[s][a] + eps*(r[a]*2 - 1.);
 
 }
 
-double phi_DeltaS(int s, double lambda,double kappa,int neig[V][8]){
+double phi_DeltaS(int s, double lambda,double kappa){
 
   double delta =0;
   double  phi2=0;
@@ -439,7 +433,7 @@ if(p<w){
   for (int a = 0; a < Ng; a++) {
     phi[s][a] = phi_new[s][a];
   }
-  
+
 return 1;
 }else{
   return 0;
@@ -606,7 +600,7 @@ if (r[1]>0.5){
       for (z=0; z<Nz; z++){
 
                 int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
-     
+
                 U[s][3].x[0]= -U[s][3].x[0];
                 U[s][3].x[1]= -U[s][3].x[1];
                 U[s][3].x[2]= -U[s][3].x[2];
@@ -653,22 +647,19 @@ void update_gauge(int nU, int multihit){
 
 double DeltaS;
 
-int neig[V][8];
-fillneigh(neig);
-
 for(int i =0; i< nU;i++){
 
   for (int s = 0; s < V; s++) {
 
       for(int mu =0; mu < Nd; mu++){
       // Calculation of the staple for the gauge sector
-      su2_x st = staple(s,mu,neig);
+      su2_x st = staple(s,mu);
 
         for(int l =0; l < multihit;l++){
-        // Generation of the new field U_new = X U, X close to identity 
+        // Generation of the new field U_new = X U, X close to identity
         gauge_update(s,mu,eps);
         // Calculation of Delta S for the gauge sector
-        DeltaS = gauge_DeltaS(s,mu,st,beta,kappa,neig);
+        DeltaS = gauge_DeltaS(s,mu,st,beta,kappa);
         //std::cout << DeltaS << " "<< exp(-DeltaS) << " " << l << std::endl;
         // Metropolis test
         accepted += gauge_MC_test(s,mu,DeltaS);
@@ -683,8 +674,6 @@ for(int i =0; i< nU;i++){
 void update_phi(int nphi){
 double DeltaS;
 
-int neig[V][8];
-fillneigh(neig);
 
 for(int i =0; i< nphi;i++){
     for (int s = 0; s < V; s++) {
@@ -693,7 +682,7 @@ phi_update(s, eps);
 
 // Calculation of DeltaS
 
-  DeltaS = phi_DeltaS(s,lambda, kappa,neig);
+  DeltaS = phi_DeltaS(s,lambda, kappa);
 
 // Metropolis test
 
@@ -705,9 +694,9 @@ op++;
 
 }
 
-void U_copy(su2_x U_out[][Nd], su2_x U_in[][Nd]){
+void U_copy(su2_x **U_out, su2_x **U_in){
 
-for (int s = 0; s < V ; s++){ 
+for (int s = 0; s < V ; s++){
   for(int mu =0; mu < Nd; mu++){
     U_out[s][mu] = U_in[s][mu];
     }
@@ -715,9 +704,9 @@ for (int s = 0; s < V ; s++){
 
 }
 
-void phi_copy(double phi_out[][Ng], double phi_in[][Ng]){
+void phi_copy(double **phi_out, double **phi_in){
 
-for (int s = 0; s < V ; s++){ 
+for (int s = 0; s < V ; s++){
   for(int a =0; a < Ng; a++){
     phi_out[s][a] = phi_in[s][a];
     }

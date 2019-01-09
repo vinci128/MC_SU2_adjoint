@@ -10,6 +10,6 @@
 #ifndef __geometry_h__
 #define __geometry_h__
 
-void fillneigh(int neigh[V][8]);
+void fillneigh();
 
 #endif

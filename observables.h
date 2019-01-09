@@ -12,10 +12,10 @@
 #ifndef __observables_h__
 #define __observables_h__
 
-double plaquette(int s, int mu,int nu,int neig[V][8]);
-double plaq_smear(int s, int mu,int nu,int neig[V][8]);
-double avr_plaquette(int neig[V][8]);
-double avr_plaquette_smear(int neig[V][8]);
+double plaquette(int s, int mu,int nu);
+double plaq_smear(int s, int mu,int nu);
+double avr_plaquette();
+double avr_plaquette_smear();
 double phi_sq();
 double phi_sq_smear();
 

@@ -8,7 +8,15 @@
 #include "su2.h"
 #include "geometry.h"
 
-void fillneigh( int neigh[V][8] ){
+int **neig;
+
+void fillneigh( ){
+
+  neig = new int*[V];
+
+ for(int i = 0; i < V; ++i){
+     neig[i] = new int[8];
+}
 
 int xup, yup, zup, tup;
 int xmin, ymin, zmin, tmin;
@@ -56,14 +64,14 @@ if(xmin == -1)(xmin = Nx -1);
   int sm3 = x + Ny*y + Ny*Nz*zmin + Ny*Nz*Nt*t;
   int sm4 = x + Ny*y + Ny*Nz*z + Ny*Nz*Nt*tmin;
 
-neigh[s][0] = sp1;
-neigh[s][1] = sp2;
-neigh[s][2] = sp3;
-neigh[s][3] = sp4;
-neigh[s][4] = sm1;
-neigh[s][5] = sm2;
-neigh[s][6] = sm3;
-neigh[s][7] = sm4;
+neig[s][0] = sp1;
+neig[s][1] = sp2;
+neig[s][2] = sp3;
+neig[s][3] = sp4;
+neig[s][4] = sm1;
+neig[s][5] = sm2;
+neig[s][6] = sm3;
+neig[s][7] = sm4;
 
 //printf("Position site: %d, neighbours%d %d %d %d %d %d %d %d\n", s, neigh[s][0],neigh[s][1],neigh[s][2],neigh[s][3],neigh[s][4],neigh[s][5],neigh[s][6],neigh[s][7]);
 

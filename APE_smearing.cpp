@@ -13,11 +13,10 @@
 
 
 
-void APE_smearing(su2_x out[][Nd], su2_x in[][Nd], double alpha)
+void APE_smearing(su2_x **out, su2_x **in, double alpha)
 {
-int neig[V][8];
+;
 double det;
-fillneigh(neig);
 for(int s =0; s < V;s++){
 
   for(int mu =0; mu<4; mu++ ) {
@@ -25,7 +24,7 @@ for(int s =0; s < V;s++){
 su2_x W,W_dag;
 
 _su2_x_mul_assign(out[s][mu],alpha,in[s][mu]);
-W = staple_in(in,s,mu,neig);
+W = staple_in(in,s,mu);
 _su2_adj(W_dag,W);
 _su2_x_mul_add(out[s][mu],(1.-alpha)/6.,W_dag );
 
@@ -39,7 +38,7 @@ _su2_x_mul_assign(out[s][mu],1./sqrt(det),out[s][mu]);
   }
 }
 
-void APE_smearing_scalar(double out[][Ng], double in[][Ng], su2_x gauge[][Nd]) {
+void APE_smearing_scalar(double **out, double **in, su2_x **gauge) {
 
   su2 T[3];
 	_su2_t1(T[0]);
@@ -47,9 +46,6 @@ void APE_smearing_scalar(double out[][Ng], double in[][Ng], su2_x gauge[][Nd]) {
 	_su2_t3(T[2]);
 
 int sp[Nd],sm[Nd];
-
-int neig[V][8];
-fillneigh(neig);
 
 
 
@@ -73,7 +69,7 @@ sm[mu] = neig[s][Nd+mu];
 
 
 for (int mu = 0; mu < 4; mu++) {
- 
+
   _su2_x_represent(Um[mu],gauge[s][mu]); // U_mu(x)^(n-1)
 
   _suNg_dagger(U_adj[mu], Um[mu]); //U_mu(x)^dag

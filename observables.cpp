@@ -10,7 +10,7 @@
 #include "su2.h"
 #include "observables.h"
 
-double plaquette(int s, int mu,int nu,int neig[V][8]){
+double plaquette(int s, int mu,int nu){
 
 double plaq=0;
 
@@ -42,7 +42,7 @@ plaq = 2*prod.x[0];
 return plaq;
 }
 
-double plaq_smear(int s, int mu,int nu,int neig[V][8]){
+double plaq_smear(int s, int mu,int nu){
 
 double plaq=0;
 
@@ -53,7 +53,7 @@ int sp[Nd];
 
 	sp[nu] = neig[s][nu];
 	sp[mu] = neig[s][mu];
-	
+
 su2_x Unu,Umu,Unu_adj,Umu_adj;
 su2_x temp1,temp2,prod;
 
@@ -74,7 +74,7 @@ plaq = 2*prod.x[0];
 return plaq;
 }
 
-double avr_plaquette(int neig[V][8]){
+double avr_plaquette(){
 
 double plaq_average=0;
 double plaq=0;
@@ -83,7 +83,7 @@ for (int s = 0; s < V; s++) {
 for (int nu = 0; nu < Nd; nu++) {
 for( int mu =0 ; mu < nu; mu++){
 
-plaq = plaquette(s,mu,nu,neig);
+plaq = plaquette(s,mu,nu);
 plaq_average += plaq;
 
 }
@@ -98,7 +98,7 @@ return plaq_average;
 
 }
 
-double avr_plaquette_smear(int neig[V][8]){
+double avr_plaquette_smear(){
 
 double plaq_average=0;
 double plaq=0;
@@ -107,7 +107,7 @@ for (int s = 0; s < V; s++) {
 for (int nu = 0; nu < Nd; nu++) {
 for( int mu =0 ; mu < nu; mu++){
 
-plaq = plaq_smear(s,mu,nu,neig);
+plaq = plaq_smear(s,mu,nu);
 plaq_average += plaq;
 
 }
@@ -196,15 +196,13 @@ void SC2_t(double O[]){
 	_su2_t3(S[2]);
 
 	//double Phix[3], Phix_up[3];
-int neig[V][8];
-fillneigh(neig);
 
 
 	//double Hop = 0;
 	int t, x, y, z; for (t=0; t<Nt; t++) { O[t] = 0; for (z=0; z<Nz; z++) for (y=0; y<Ny; y++)  for (x=0; x<Nx; x++) {
 
 	  int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
- 
+
  int sp[Nd];
 
 for(int mu= 0; mu < Nd; mu++){
@@ -240,17 +238,14 @@ sp[mu] = neig[s][mu];
 
 void SC3_t(double O[]){
 
-int neig[V][8];
-fillneigh(neig);
-
 	int t, x, y, z; for (t=0; t<Nt; t++) { O[t] = 0; for (z=0; z<Nz; z++) for (y=0; y<Ny; y++)  for (x=0; x<Nx; x++) {
 
 		int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
 
 
-		O[t] += plaq_smear(s,0,1,neig);
-		O[t] += plaq_smear(s,1,2,neig);
-		O[t] += plaq_smear(s,2,0,neig);
+		O[t] += plaq_smear(s,0,1);
+		O[t] += plaq_smear(s,1,2);
+		O[t] += plaq_smear(s,2,0);
 
 		}
 	O[t] = O[t]/ sqrt(3*Nx*Ny*Nz);
@@ -261,11 +256,9 @@ fillneigh(neig);
 double phi_plaq_smear(int s,int mu,int nu)
 {
   int sp[Nd];
-  int neig[V][8];
+  ;
   double p;
   su2 v1,v2,v3,v4,w1,w2,w3,w4;
-
-fillneigh(neig);
 
 for (int mu = 0; mu < Nd; mu++)
 {
@@ -327,7 +320,7 @@ for (int a = 0; a < Ng; ++a)
 {
 phi2 += phi_smear[s][a]*phi_smear[s][a];
 }
-				
+
 
 				phip[0] = phi_plaq_smear(s,1,2);
 				phip[1] = phi_plaq_smear(s,2,0);
