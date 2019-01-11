@@ -22,7 +22,7 @@ void write_gauge_field(char filename[]);
 void read_adjoint_field(char filename[]);
 void read_gauge_field(char filename[]);
 
-void read_B(char *argv[]);
+void read_B(char *argv[], int n_smear);
 
 
 #endif

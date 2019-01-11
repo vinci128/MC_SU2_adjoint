@@ -58,7 +58,7 @@ double W, Wmin;
 
 for(int s =0; s < V;s++){
 
-  for(int mu= 0; mu < Nd; mu++){
+  for(int mu= 0; mu < 3; mu++){
 sp[mu] = neig[s][mu];
 sm[mu] = neig[s][Nd+mu];
 }

@@ -148,7 +148,7 @@ for(int s=0; s < V; s++ ){
 
 }
 
-void read_B(char *argv[]){
+void read_B(char *argv[], int n_smear){
 
 double B[n_smear][Nt][3];
 

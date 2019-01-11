@@ -335,3 +335,211 @@ phi2 += phi_smear[s][a]*phi_smear[s][a];
 //	return Phi_cond/(double)GLB_VOLUME;
 
 }
+
+void W_t(double O[][6][6][6]){
+
+int sp[Nd], sm[Nd], spp[Nd][Nd],spm[Nd][Nd],sppm[Nd][Nd][Nd];
+
+int t, x, y, z;
+for (t=0; t<Nt; t++) {
+
+		for (z=0; z<Nz; z++) {
+		for (y=0; y<Ny; y++) {
+		for (x=0; x<Nx; x++) {
+
+int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
+
+// Initialize neighbours and observables arrays
+
+	for (int mu = 0; mu < 3; mu++) {
+sp[mu] = neig[s][mu];
+sm[mu] = neig[s][Nd + mu];
+		for (int nu = 0; nu < 3; nu++) {
+			spp[mu][nu] = neig[sp[mu]][nu];
+			spm[mu][nu] = neig[sp[mu]][Nd+nu];
+				for (int rho = 0; rho < 3; rho++) {
+					sppm[mu][nu][rho] = neig[spp[mu][nu]][Nd+rho];
+					O[t][mu][nu][rho] = 0;
+					O[t][mu+3][nu+3][rho+3] = 0;
+				}
+			}
+}
+					for (int mu = 0; mu < 3; mu++) {
+						for (int nu = 0; nu < 3; nu++) {
+								for (int rho = 0; rho < 3; rho++) {
+
+
+				su2_x v1,v2,v3,v4,v5,v6,v7,v8;
+				su2_x w1,w2,w3,w4,w5,w6,w7,w8;
+				su2_x S1,S2,S3,S4,S5,S6,S7;
+				//double W,W_min;
+
+			v1=U_smear[s][mu];
+			v2=U_smear[sp[mu]][mu];
+			v3=U_smear[spp[mu][mu]][nu];
+			//v4=*pu_gauge_smear(im,mu);
+			_su2_adj(v4,U_smear[spp[mu][nu]][mu]);
+			v5=U_smear[spp[mu][nu]][rho];
+			_su2_adj(v6,U_smear[spp[nu][rho]][mu]);
+			_su2_adj(v7,U_smear[sp[nu]][rho]);
+			_su2_adj(v8,U_smear[s][nu]);
+
+
+
+			_su2_times_su2(S1,v7,v8);
+			_su2_times_su2(S2,v6,S1);
+			_su2_times_su2(S3,v5,S2);
+			_su2_times_su2(S4,v4,S3);
+			_su2_times_su2(S5,v3,S4);
+			_su2_times_su2(S6,v2,S5);
+			_su2_times_su2(S7,v1,S6);
+			O[t][mu][nu][rho] += S7.x[0];
+
+			_su2_adj(w1,U_smear[sm[mu]][mu]);
+			_su2_adj(w2,U_smear[s][mu]);
+			_su2_adj(w3,U_smear[sppm[mu][mu][nu]][nu]);
+			w4=U_smear[sp[nu]][mu];
+			_su2_adj(w5,U_smear[sppm[mu][nu][rho]][rho]);
+			w6=U_smear[sppm[nu][rho][mu]][mu];
+			w7=U_smear[spm[nu][rho]][rho];
+			w8=U_smear[sm[nu]][nu];
+
+			_su2_times_su2(S1,w7,w8);
+			_su2_times_su2(S2,w6,S1);
+			_su2_times_su2(S3,w5,S2);
+			_su2_times_su2(S4,w4,S3);
+			_su2_times_su2(S5,w3,S4);
+			_su2_times_su2(S6,w2,S5);
+			_su2_times_su2(S7,w1,S6);
+			O[t][mu+3][nu+3][rho+3] += S7.x[0];
+
+
+			}}}
+
+
+					}
+				}
+			}
+
+		}
+
+
+}
+
+void Bm_t(double O[][6][6][6] ){
+
+double W[Nt][6][6][6];
+
+W_t(W);
+
+for (int t=0; t<Nt; t++) {
+
+	for (int mu = 0; mu < 3; mu++) {
+		for (int nu = 0; nu < 3; nu++) {
+				for (int rho = 0; rho < 3; rho++) {
+
+O[t][mu][nu][rho] = W[t][mu][nu][rho]+ W[t][mu][nu][rho+3] +W[t][mu][nu+3][rho] +W[t][mu][nu+3][rho+3]
+ 									- W[t][mu+3][nu][rho] -W[t][mu+3][nu][rho+3] -W[t][mu+3][nu+3][rho] - W[t][mu+3][nu+3][rho+3];
+
+
+}
+}
+}
+
+}
+
+}
+
+void Cm_t(double O[][6][6][6]){
+
+	double W[Nt][6][6][6];
+
+	W_t(W);
+
+for (int t=0; t<Nt; t++) {
+
+	for (int mu = 0; mu < 3; mu++) {
+		for (int nu = 0; nu < 3; nu++) {
+				for (int rho = 0; rho < 3; rho++) {
+
+O[t][mu][nu][rho] = W[t][mu][nu][rho]+ W[t][mu][nu][rho+3] -W[t][mu][nu+3][rho] -W[t][mu][nu+3][rho+3]
+					 				+ W[t][mu+3][nu][rho] +W[t][mu+3][nu][rho+3] -W[t][mu+3][nu+3][rho] - W[t][mu+3][nu+3][rho+3];
+
+
+}
+}
+}
+
+}
+
+}
+
+void Dm_t(double O[][6][6][6]){
+
+double W[Nt][6][6][6];
+W_t(W);
+
+for (int t=0; t<Nt; t++) {
+
+	for (int mu = 0; mu < 3; mu++) {
+		for (int nu = 0; nu < 3; nu++) {
+				for (int rho = 0; rho < 3; rho++) {
+
+O[t][mu][nu][rho] = W[t][mu][nu][rho]- W[t][mu][nu][rho+3] +W[t][mu][nu+3][rho] -W[t][mu][nu+3][rho+3]
+									+ W[t][mu+3][nu][rho] -W[t][mu+3][nu][rho+3] +W[t][mu+3][nu+3][rho] - W[t][mu+3][nu+3][rho+3];
+
+
+}
+}
+}
+
+}
+
+}
+
+void T1m_t(double O[][3]){
+
+double B[Nt][6][6][6];
+
+Bm_t(B);
+
+for (int t=0; t<Nt; t++) {
+
+	O[t][0] = B[t][0][1][2]+B[t][0][2][1];
+	O[t][1] = B[t][1][2][0]+B[t][1][0][2];
+	O[t][2] = B[t][2][0][1]+B[t][2][1][0];
+}
+
+}
+
+void T2m_t(double O[][3]){
+
+	double C[Nt][6][6][6];
+
+	Cm_t(C);
+
+	for (int t=0; t<Nt; t++) {
+
+		O[t][0] = C[t][0][1][2]+C[t][2][1][0];
+		O[t][1] = C[t][1][2][0]+C[t][0][2][1];
+		O[t][2] = C[t][2][0][1]+C[t][1][0][2];
+
+	}
+
+}
+
+void T3m_t(double O[][3]){
+
+	double D[Nt][6][6][6];
+
+	Dm_t(D);
+
+	for (int t=0; t<Nt; t++) {
+
+		O[t][0] = D[t][0][1][2]+D[t][1][0][2];
+		O[t][1] = D[t][1][2][0]+D[t][2][1][0];
+		O[t][2] = D[t][2][0][1]+D[t][0][2][1];
+
+	}
+
+}

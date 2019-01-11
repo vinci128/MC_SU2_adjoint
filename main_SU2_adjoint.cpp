@@ -37,6 +37,8 @@ phif.open ("phi.dat");
 std::ofstream logf;
 logf.open ("log.dat");
 
+char out_name[128];
+
 read_input(argv);
 
     beta = in.b;
@@ -52,15 +54,16 @@ V=Nx*Ny*Nz*Nt;
 alloc_fields();
 
 fillneigh();
+sprintf(out_name,"output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
 std::ofstream outf;
 outf.open(argv[2],std::ios::out|std::ios::binary);
 
 // Parameters that determine the evolution
 
-int therm = 1;
-int n_meas = 1;
-int n_decorr = 1;
+int therm = 100;
+int n_meas = 1000;
+int n_decorr = 10;
 int multihit = 10;
 int n_smear = 5;
 //int meas_freq = 10;
@@ -122,7 +125,6 @@ APE_smearing(U_smear,U, 0.55);
 APE_smearing_scalar(phi_smear,phi,U);
 
 plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
-
 phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
 B_t(B);
