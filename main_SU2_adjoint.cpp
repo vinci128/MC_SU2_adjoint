@@ -120,6 +120,9 @@ phif  << "no_smear: " << phi_sq()  <<"\n";
 for(int k =0; k < n_smear; k++){
 
   double B[Nt][3];
+  double T1[Nt][3];
+  double T2[Nt][3];
+  double T3[Nt][3];
 
 APE_smearing(U_smear,U, 0.55);
 APE_smearing_scalar(phi_smear,phi,U);
@@ -128,7 +131,14 @@ plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
 phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
 B_t(B);
+T1m_t(T1);
+T2m_t(T2);
+T3m_t(T3);
+
 outf.write( (char*)&B, sizeof(B));
+outf.write( (char*)&T1, sizeof(T1));
+outf.write( (char*)&T2, sizeof(T2));
+outf.write( (char*)&T3, sizeof(T3));
 
 U_copy(U,U_smear);
 phi_copy(phi,phi_smear);
