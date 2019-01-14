@@ -22,7 +22,8 @@ int Ny;
 int Nz;
 int Nt;
 
-//input in;
+input in;
+
 
 int main(int argc, char *argv[]){
 
@@ -39,7 +40,7 @@ logf.open ("log.dat");
 
 char out_name[128];
 
-read_input(argv);
+in.read(argv);
 
     beta = in.b;
     kappa = in.k;
@@ -61,20 +62,19 @@ outf.open(argv[2],std::ios::out|std::ios::binary);
 
 // Parameters that determine the evolution
 
-int therm = 100;
-int n_meas = 1000;
-int n_decorr = 10;
-int multihit = 10;
-int n_smear = 5;
+int therm = in.th;
+int n_meas = in.meas;
+int n_decorr = in.decorr;
+int multihit = in.mhit;
+int n_smear = in.sm;
 //int meas_freq = 10;
 //int save_freq = 1000;
-int n_run =1;
-// Filename for configuration files
-
+int n_run = in.run;
+double alpha = in.alpha;
+// Filenames for configuration files
 
 char gauge_name[128];
 char adjoint_name[128];
-
 
 // Random number generator initialization
 
@@ -82,7 +82,7 @@ rlxd_init(1, 12435);
 
 // Initialize the fields
 
-cold_start();
+hot_start();
 
 
 logf << "Field initialized \n";
@@ -124,7 +124,7 @@ for(int k =0; k < n_smear; k++){
   double T2[Nt][3];
   double T3[Nt][3];
 
-APE_smearing(U_smear,U, 0.55);
+APE_smearing(U_smear,U, alpha);
 APE_smearing_scalar(phi_smear,phi,U);
 
 plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";

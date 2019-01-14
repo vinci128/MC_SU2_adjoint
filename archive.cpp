@@ -23,26 +23,35 @@ double **phi;
 double **phi_smear;
 double **phi_new;
 
-  input in;
-
-void read_input(char *argv[]){
-
-  std::ifstream inputf;
-  inputf.open(argv[1]);
+//  input in;
 
 
-   if (inputf.is_open())
-    {
-  inputf >> in.N;
-  inputf >> in.b;
-  inputf >> in.k;
-  inputf >> in.l;
+  void input::read(char *argv[]){
+
+    std::ifstream inputf;
+    inputf.open(argv[1]);
+
+     if (inputf.is_open())
+      {
+    inputf >> N;
+    inputf >> b;
+    inputf >> k;
+    inputf >> l;
+    inputf >> th;
+    inputf >> meas;
+    inputf >> decorr;
+    inputf >> mhit;
+    inputf >> sm;
+    inputf >> run;
+    inputf  >> alpha;
+    }
+
+        inputf.close();
+
+
   }
 
-      inputf.close();
 
-
-}
 
 void alloc_fields(){
 

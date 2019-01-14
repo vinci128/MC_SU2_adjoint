@@ -3,4 +3,4 @@ Montecarlo code for simulating a SU(2) HIggs theory, with the Higgs in the adjoi
 
 The commands for compilation are inside a bash script called makescript.sh. The main executable is calle SU2_adjoint.
 
-It works with an input file. Its name has to be specified in the command line. 
+It works with an input file. Its name has to be specified in the command line.

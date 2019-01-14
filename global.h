@@ -10,13 +10,26 @@
 
 #define __global_h__
 
-typedef struct{
+class input{
+public:
+
   int N;
   double b;
   double k;
   double l;
-} input;
+  int th;
+  int meas;
+  int decorr;
+  int mhit;
+  int sm;
+  int run;
+  double alpha;
 
+void read(char *argv[]);
+
+};
+
+extern input in;
 
 
 extern  int Ng;
