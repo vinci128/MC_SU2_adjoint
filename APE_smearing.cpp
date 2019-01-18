@@ -15,13 +15,14 @@
 
 void APE_smearing(su2_x **out, su2_x **in, double alpha)
 {
-;
 double det;
 for(int s =0; s < V;s++){
 
   for(int mu =0; mu<3; mu++ ) {
 
 su2_x W,W_dag;
+
+//printf("%f %f %f %f \n", in[s][mu].x[0], in[s][mu].x[1],in[s][mu].x[2],in[s][mu].x[3] );
 
 _su2_x_mul_assign(out[s][mu],alpha,in[s][mu]);
 W = staple_in(in,s,mu);
@@ -33,8 +34,11 @@ det = out[s][mu].x[0]*out[s][mu].x[0] + out[s][mu].x[1]*out[s][mu].x[1] + out[s]
 
 _su2_x_mul_assign(out[s][mu],1./sqrt(det),out[s][mu]);
 
+//printf("%f %f %f %f \n", out[s][mu].x[0], out[s][mu].x[1],out[s][mu].x[2],out[s][mu].x[3] );
 
     }
+_su2_eq(out[s][3],in[s][3]);
+
   }
 }
 
@@ -58,14 +62,16 @@ double W, Wmin;
 
 for(int s =0; s < V;s++){
 
+  for(int a =0; a <Ng; a++){
+    out[s][a] = in[s][a]/7.;
+  }
+
   for(int mu= 0; mu < 3; mu++){
 sp[mu] = neig[s][mu];
 sm[mu] = neig[s][Nd+mu];
 }
 
-  for(int a =0; a <Ng; a++){
-    out[s][a] = in[s][a]/7.;
-  }
+
 
 
 for (int mu = 0; mu < 3; mu++) {
@@ -108,6 +114,7 @@ out[s][a] += W*in[sp[mu]][b]/7. + Wmin*in[sm[mu]][b]/7.;
 
 
     }
+
   }
 
 }

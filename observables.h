@@ -31,9 +31,9 @@ void B_t(double O[][3]);
 
 void W_t(double O[][6][6][6]);
 
-void Bm_t(double O[][6][6][6]);
-void Cm_t(double O[][6][6][6]);
-void Dm_t(double O[][6][6][6]);
+void Bm_t(double O[][3][3][3]);
+void Cm_t(double O[][3][3][3]);
+void Dm_t(double O[][3][3][3]);
 
 void T1m_t(double O[][3]);
 void T2m_t(double O[][3]);

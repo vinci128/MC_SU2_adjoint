@@ -256,7 +256,6 @@ void SC3_t(double O[]){
 double phi_plaq_smear(int s,int mu,int nu)
 {
   int sp[Nd];
-  ;
   double p;
   su2 v1,v2,v3,v4,w1,w2,w3,w4;
 
@@ -331,8 +330,6 @@ phi2 += phi_smear[s][a]*phi_smear[s][a];
 				}
 		}}}
 	}
-//printf("%f %f %f %f %f %f %f %f\n",OSC1[0], OSC1[1],OSC1[2],OSC1[3],OSC1[4],OSC1[5],OSC1[6],OSC1[7] );
-//	return Phi_cond/(double)GLB_VOLUME;
 
 }
 
@@ -426,7 +423,7 @@ sm[mu] = neig[s][Nd + mu];
 
 }
 
-void Bm_t(double O[][6][6][6] ){
+void Bm_t(double O[][3][3][3] ){
 
 double W[Nt][6][6][6];
 
@@ -450,7 +447,7 @@ O[t][mu][nu][rho] = W[t][mu][nu][rho]+ W[t][mu][nu][rho+3] +W[t][mu][nu+3][rho] 
 
 }
 
-void Cm_t(double O[][6][6][6]){
+void Cm_t(double O[][3][3][3]){
 
 	double W[Nt][6][6][6];
 
@@ -474,7 +471,7 @@ O[t][mu][nu][rho] = W[t][mu][nu][rho]+ W[t][mu][nu][rho+3] -W[t][mu][nu+3][rho] 
 
 }
 
-void Dm_t(double O[][6][6][6]){
+void Dm_t(double O[][3][3][3]){
 
 double W[Nt][6][6][6];
 W_t(W);
@@ -499,7 +496,7 @@ O[t][mu][nu][rho] = W[t][mu][nu][rho]- W[t][mu][nu][rho+3] +W[t][mu][nu+3][rho] 
 
 void T1m_t(double O[][3]){
 
-double B[Nt][6][6][6];
+double B[Nt][3][3][3];
 
 Bm_t(B);
 
@@ -514,7 +511,7 @@ for (int t=0; t<Nt; t++) {
 
 void T2m_t(double O[][3]){
 
-	double C[Nt][6][6][6];
+	double C[Nt][3][3][3];
 
 	Cm_t(C);
 
@@ -530,7 +527,7 @@ void T2m_t(double O[][3]){
 
 void T3m_t(double O[][3]){
 
-	double D[Nt][6][6][6];
+	double D[Nt][3][3][3];
 
 	Dm_t(D);
 

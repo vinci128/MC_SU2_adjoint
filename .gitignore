@@ -7,3 +7,5 @@ phi.dat
 output_file
 *.o
 main_SU2_adjoint.sublime-workspace
+O0plus_output_files/
+O1minus_output_files/
