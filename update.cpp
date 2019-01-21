@@ -116,11 +116,11 @@ su2_x staple(int s, int mu){
 int sm[Nd];
 int spm[Nd][Nd];
 
-for(int mu= 0; mu < Nd; mu++){
-sp[mu] = neig[s][mu];
-sm[mu] = neig[s][Nd+mu];
+for(int m= 0; m < Nd; m++){
+sp[m] = neig[s][m];
+sm[m] = neig[s][Nd+m];
 for(int nu= 0; nu < Nd; nu++){
-spm[mu][nu] = neig[neig[s][mu]][Nd+nu];
+spm[m][nu] = neig[neig[s][m]][Nd+nu];
 }
 }
 
@@ -180,11 +180,11 @@ su2_x staple_in(su2_x **in,int s, int mu){
 int sm[Nd];
 int spm[Nd][Nd];
 
-for(int mu= 0; mu < Nd; mu++){
-sp[mu] = neig[s][mu];
-sm[mu] = neig[s][Nd+mu];
+for(int m= 0; m < Nd; m++){
+sp[m] = neig[s][m];
+sm[m] = neig[s][Nd+m];
 for(int nu= 0; nu < Nd; nu++){
-spm[mu][nu] = neig[neig[s][mu]][Nd+nu];
+spm[m][nu] = neig[neig[s][m]][Nd+nu];
 }
 }
 

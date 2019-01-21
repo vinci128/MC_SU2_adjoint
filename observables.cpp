@@ -259,9 +259,9 @@ double phi_plaq_smear(int s,int mu,int nu)
   double p;
   su2 v1,v2,v3,v4,w1,w2,w3,w4;
 
-for (int mu = 0; mu < Nd; mu++)
+for (int m = 0; m < Nd; m++)
 {
-	sp[mu] = neig[s][mu];
+	sp[m] = neig[s][m];
 }
 
 su2 Phim;
