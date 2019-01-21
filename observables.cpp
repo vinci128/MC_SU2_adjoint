@@ -348,16 +348,15 @@ int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
 
 // Initialize neighbours and observables arrays
 
-	for (int mu = 0; mu < 3; mu++) {
+	for (int mu = 0; mu < Nd; mu++) {
 sp[mu] = neig[s][mu];
 sm[mu] = neig[s][Nd + mu];
-		for (int nu = 0; nu < 3; nu++) {
+		for (int nu = 0; nu < Nd; nu++) {
 			spp[mu][nu] = neig[sp[mu]][nu];
 			spm[mu][nu] = neig[sp[mu]][Nd+nu];
-				for (int rho = 0; rho < 3; rho++) {
+				for (int rho = 0; rho < Nd; rho++) {
 					sppm[mu][nu][rho] = neig[spp[mu][nu]][Nd+rho];
-					O[t][mu][nu][rho] = 0;
-					O[t][mu+3][nu+3][rho+3] = 0;
+
 				}
 			}
 }
@@ -365,6 +364,8 @@ sm[mu] = neig[s][Nd + mu];
 						for (int nu = 0; nu < 3; nu++) {
 								for (int rho = 0; rho < 3; rho++) {
 
+									O[t][mu][nu][rho] = 0;
+									O[t][mu+3][nu+3][rho+3] = 0;
 
 				su2_x v1,v2,v3,v4,v5,v6,v7,v8;
 				su2_x w1,w2,w3,w4,w5,w6,w7,w8;

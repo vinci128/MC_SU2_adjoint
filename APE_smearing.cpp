@@ -17,7 +17,6 @@ void APE_smearing(su2_x **out, su2_x **in, double alpha)
 {
 double det;
 for(int s =0; s < V;s++){
-
   for(int mu =0; mu<3; mu++ ) {
 
 su2_x W,W_dag;
@@ -37,7 +36,7 @@ _su2_x_mul_assign(out[s][mu],1./sqrt(det),out[s][mu]);
 //printf("%f %f %f %f \n", out[s][mu].x[0], out[s][mu].x[1],out[s][mu].x[2],out[s][mu].x[3] );
 
     }
-_su2_eq(out[s][3],in[s][3]);
+    _su2_eq(out[s][3],in[s][3]);
 
   }
 }
