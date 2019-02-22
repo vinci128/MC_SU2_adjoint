@@ -92,7 +92,6 @@ cold_start();
 
 logf << "Field initialized \n";
 
-//std::cout << U[1][3].x[0] << "\n";
 
 logf << "Update start \n ";
 
@@ -122,16 +121,56 @@ phi_copy(phi_old,phi);
 plaqf << "no_smear: "<< avr_plaquette()  << "\n";
 phif  << "no_smear: " << phi_sq()  <<"\n";
 
+U_copy(U_smear,U);
+phi_copy(phi_smear,phi);
+
+double B[Nt][3];
+double T1[Nt][3];
+double T2[Nt][3];
+double T3[Nt][3];
+
+double SC1[Nt];
+double SC2[Nt];
+double SC3[Nt];
+
+B_t(B);
+T1m_t(T1);
+T2m_t(T2);
+T3m_t(T3);
+
+SC1_t(SC1);
+SC2_t(SC2);
+SC3_t(SC3);
+
+O1minusf.write( (char*)&B, sizeof(B));
+O1minusf.write( (char*)&T1, sizeof(T1));
+O1minusf.write( (char*)&T2, sizeof(T2));
+O1minusf.write( (char*)&T3, sizeof(T3));
+
+O0plusf.write((char*)&SC1,sizeof(SC1));
+O0plusf.write((char*)&SC2,sizeof(SC2));
+O0plusf.write((char*)&SC3,sizeof(SC3));
+
+/*
+for(int t = 0; t < Nt; t++) {
+  for (int l = 0; l < 3; l++) {
+    printf("n= %d sm= 0  B[%d][%d] = %f \n",i, t,l,B[t][l] );
+//    printf("n= %d sm= 0 T1[%d][%d] = %f \n",i, t,l,T1[t][l] );
+//    printf("n= %d sm= 0 T2[%d][%d] = %f \n",i, t,l,T2[t][l] );
+//    printf("n= %d sm= 0 T3[%d][%d] = %f \n",i, t,l,T3[t][l] );
+
+  }
+
+}
+*/
+
+
+
+
+
 for(int k =0; k < n_smear; k++){
 
-  double B[Nt][3];
-  double T1[Nt][3];
-  double T2[Nt][3];
-  double T3[Nt][3];
 
-  double SC1[Nt];
-  double SC2[Nt];
-  double SC3[Nt];
 
 APE_smearing(U_smear,U, alpha);
 APE_smearing_scalar(phi_smear,phi,U);
@@ -153,19 +192,20 @@ O1minusf.write( (char*)&T1, sizeof(T1));
 O1minusf.write( (char*)&T2, sizeof(T2));
 O1minusf.write( (char*)&T3, sizeof(T3));
 
+
 /*
 for(int t = 0; t < Nt; t++) {
   for (int l = 0; l < 3; l++) {
-    printf("n= %d sm= %d  B[%d][%d] = %f \n",i,k, t,l,B[t][l] );
-    printf("n= %d sm= %d T1[%d][%d] = %f \n",i,k, t,l,T1[t][l] );
-    printf("n= %d sm= %d T2[%d][%d] = %f \n",i,k, t,l,T2[t][l] );
-    printf("n= %d sm= %d T3[%d][%d] = %f \n",i,k, t,l,T3[t][l] );
+    printf("n= %d sm= %d  B[%d][%d] = %f \n",i,k+1, t,l,B[t][l] );
+//    printf("n= %d sm= %d T1[%d][%d] = %f \n",i,k+1, t,l,T1[t][l] );
+//    printf("n= %d sm= %d T2[%d][%d] = %f \n",i,k+1, t,l,T2[t][l] );
+//    printf("n= %d sm= %d T3[%d][%d] = %f \n",i,k+1, t,l,T3[t][l] );
 
   }
 
 }
-
 */
+
 
 O0plusf.write((char*)&SC1,sizeof(SC1));
 O0plusf.write((char*)&SC2,sizeof(SC2));
@@ -192,6 +232,8 @@ phi_copy(phi,phi_old);
 
 sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
 sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+
+std::cout << gauge_name << std::endl;
 
 write_gauge_field(gauge_name);
 write_adjoint_field(adjoint_name);
