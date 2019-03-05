@@ -1,5 +1,7 @@
 mkdir conf
 mkdir adj_conf
+mkdir O1minus_output_files
+mkdir O0plus_output_files
 g++ -Wall -g -c ranlxd.c
 g++ -Wall -g -c geometry.cpp
 g++ -Wall -g -c archive.cpp
