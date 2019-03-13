@@ -125,6 +125,9 @@ U_copy(U_smear,U);
 phi_copy(phi_smear,phi);
 
 double B[Nt][3];
+
+double B_p[Nt][3];
+
 double T1[Nt][3];
 double T2[Nt][3];
 double T3[Nt][3];
@@ -133,7 +136,8 @@ double SC1[Nt];
 double SC2[Nt];
 double SC3[Nt];
 
-B_t(B);
+//B_t(B);
+B_z_t(B_p);
 T1m_t(T1);
 T2m_t(T2);
 T3m_t(T3);
@@ -142,7 +146,7 @@ SC1_t(SC1);
 SC2_t(SC2);
 SC3_t(SC3);
 
-O1minusf.write( (char*)&B, sizeof(B));
+O1minusf.write( (char*)&B_p, sizeof(B_p));
 O1minusf.write( (char*)&T1, sizeof(T1));
 O1minusf.write( (char*)&T2, sizeof(T2));
 O1minusf.write( (char*)&T3, sizeof(T3));
@@ -167,7 +171,6 @@ for(int t = 0; t < Nt; t++) {
 
 
 
-
 for(int k =0; k < n_smear; k++){
 
 
@@ -178,7 +181,7 @@ APE_smearing_scalar(phi_smear,phi,U);
 plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
 phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
-B_t(B);
+B_z_t(B_p);
 T1m_t(T1);
 T2m_t(T2);
 T3m_t(T3);
@@ -187,7 +190,7 @@ SC1_t(SC1);
 SC2_t(SC2);
 SC3_t(SC3);
 
-O1minusf.write( (char*)&B, sizeof(B));
+O1minusf.write( (char*)&B_p, sizeof(B_p));
 O1minusf.write( (char*)&T1, sizeof(T1));
 O1minusf.write( (char*)&T2, sizeof(T2));
 O1minusf.write( (char*)&T3, sizeof(T3));

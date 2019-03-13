@@ -29,6 +29,8 @@ void SC3_t(double O[]);
 
 void B_t(double O[][3]);
 
+void B_z_t(double O[][3]);
+
 void W_t(double O[][6][6][6]);
 
 void Bm_t(double O[][3][3][3]);

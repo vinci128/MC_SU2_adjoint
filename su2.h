@@ -21,7 +21,12 @@ typedef struct{
   complex c[4];
 } su2;
 
+typedef struct{
+  double v[3];
+} vec;
 
+#define _sc_prod(p,a,b)\
+p = a.v[0]*b.v[0]+a.v[1]*b.v[1]+a.v[2]*b.v[2];
 
 #define _su2_unit(u) \
 _complex_1(u.c[0]);\
@@ -230,13 +235,12 @@ u.x[3] += r*v.x[3];
 /* k=Re Tr (u) */
 #define _suNg_trace_re(k,u) \
    (k)=_complex_re((u).c[0])+ \
-       _complex_re((u).c[3])     
+       _complex_re((u).c[3])
 
 /* k=Im Tr (u) */
 #define _suNg_trace_im(k,u) \
    (k)=_complex_im((u).c[0])+ \
-       _complex_im((u).c[3])    
-      
-      
-#endif
+       _complex_im((u).c[3])
 
+
+#endif
