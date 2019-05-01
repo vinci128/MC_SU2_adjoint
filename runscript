@@ -48,10 +48,10 @@
 #declare ny=${array2[3]}
 #declare nz=${array2[5]}
 #declare nt=${array2[7]}
-declare nx = $1
-declare ny = ${nx}
-declare nz = ${nx}
-declare nt = ${nx}
+ nx = $1
+ ny = ${nx}
+ nz = ${nx}
+ nt = ${nx}
 
 ### Loop over random couplings ###
 #for value in `eval echo {1..$njobs}`
@@ -66,10 +66,10 @@ declare nt = ${nx}
 #    val3=$((4+$value*3-3))
 #    lambda=${array[$val3]}
 
-for ((k =0.45; k <= 0.65; k+= 0.005)); do
+for ((k =0; k <= 21; k++)); do
 
   beta = 4
-  kappa = $k
+  kappa = 0.45 + 0.01*$k
   lambda =1
   therm = 1000
   meas = 1000
