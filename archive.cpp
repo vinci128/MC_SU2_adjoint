@@ -121,14 +121,15 @@ void read_adjoint_field(char filename[]){
 
   ifstream infile;
   infile.open(filename, ios::binary | ios::in);
-
+	double buff;
 
 for(int s=0; s < V; s++ ){
 	for(int a=0; a < Ng;a++){
-		double buff = phi[s][a];
+
 
 		infile.read((char*)&buff,sizeof(double));
-
+//    std::cout << "buff" << buff << '\n';
+phi[s][a] = buff;
 	}
 }
   infile.close();
