@@ -1,5 +1,6 @@
 conf/
 adj_conf/
+obs/
 log.dat
 out
 plaq.dat
