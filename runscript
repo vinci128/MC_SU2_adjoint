@@ -42,7 +42,7 @@
 #  done < "input_for_runs"
 #}
 #getArray2
-
+    mkdir input_files
 #### Set geometry ####
 #declare nx=${array2[1]}
 #declare ny=${array2[3]}
@@ -78,12 +78,12 @@
 for ((k =0; k <= 20; k++)); do
 
 
-  kappa=$[0.45+0.01*k]
+  kappa=$(bc <<< 0.45+0.01*$k)
 
 
 
     ### Generate input file ###
-    echo mkdir input_files
+
     infile="input_files/input_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.in"
     cp input_temp $infile
     sed -i -e "s/N_/${nx}/g" $infile

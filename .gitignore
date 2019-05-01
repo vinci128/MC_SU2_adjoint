@@ -1,6 +1,7 @@
 conf/
 adj_conf/
 obs/
+input_files/
 log.dat
 out
 plaq.dat
