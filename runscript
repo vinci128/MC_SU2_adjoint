@@ -1,0 +1,120 @@
+#!/bin/bash
+
+################################################################################
+# Script       : runscript
+# Author       : V. Afferrante
+# E-Mail       : vincenzo.afferrante@uni-graz.at
+# Created      : 1/05/2019
+# Last modified: 1/05/2019
+# Description  : Script to submit "njobs" jobs to the cluster for random values
+#                of the couplings beta, kappa, and lambda read from the file
+#                "rand_couplings". The lattice geometry can be modified in
+#                "input_for_runs".
+# Execute with : runscript "file_with_random_couplings"
+################################################################################
+
+### File with random couplings ###
+#rc_file=$1
+
+#### Get random couplings ####
+#getArray()
+#{
+#   local i=0
+#   array=()
+#   while IFS= read line
+#   do
+#      array+=("$line")
+#  done < "${rc_file}"
+#}
+#getArray
+
+#### Set number of random couplings ####
+#declare njobs=${array[1]}
+
+#### Get basic input data: Lattice geometry ####
+#getArray2()
+#{
+#   local i=0
+#   array2=()
+#   while IFS= read line
+#   do
+#      array2+=("$line")
+#  done < "input_for_runs"
+#}
+#getArray2
+
+#### Set geometry ####
+#declare nx=${array2[1]}
+#declare ny=${array2[3]}
+#declare nz=${array2[5]}
+#declare nt=${array2[7]}
+declare nx = $1
+declare ny = ${nx}
+declare nz = ${nx}
+declare nt = ${nx}
+
+### Loop over random couplings ###
+#for value in `eval echo {1..$njobs}`
+#do
+    ### Get random couplings ###
+#    val1=$((2+$value*3-3))
+#    beta=${array[$val1]}
+
+#    val2=$((3+$value*3-3))
+#    kappa=${array[$val2]}
+
+#    val3=$((4+$value*3-3))
+#    lambda=${array[$val3]}
+
+for ((k =0.45; k <= 0.65; k+= 0.005)); do
+
+  beta = 4
+  kappa = $k
+  lambda =1
+  therm = 1000
+  meas = 1000
+  dec = 50
+  mh = 5
+  sm =0
+  run =1
+  alpha = 0.55
+
+
+    ### Generate input file ###
+    echo mkdir input_files
+    infile="input_files/input_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.in"
+    cp input_files/input_temp $infile
+    sed -i -e "s/N_/${nx}/g" $infile
+    #sed -i -e "s/N_NY/${ny}/g" $infile
+    #sed -i -e "s/N_NZ/${nz}/g" $infile
+    #sed -i -e "s/N_NT/${nt}/g" $infile
+    sed -i -e "s/B_/${beta}/g" $infile
+    sed -i -e "s/K_/${kappa}/g" $infile
+    sed -i -e "s/L_/${lambda}/g" $infile
+    sed -i -e "s/TH_/${therm}/g" $infile
+    sed -i -e "s/MEAS_/${meas}/g" $infile
+    sed -i -e "s/DEC_/${dec}/g" $infile
+    sed -i -e "s/MH_/${mh}/g" $infile
+    sed -i -e "s/SM_/${lambda}/g" $infile
+    sed -i -e "s/RUN_/${lambda}/g" $infile
+    sed -i -e "s/ALPHA_/${lambda}/g" $infile
+    ### Generate output file ###
+#    outfile="output_files\/output_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.dat"
+
+    ### Generate log files
+#    logfile="log_files\/logfile_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.log"
+
+    ### Generate runscripts ###
+    runfile="clrun_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}"
+    infile_dummy="input_files\/input_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.in"
+    cp clrun_temp $runfile
+    jobname="V${nx}x${ny}x${nz}x${nt}_B${beta}K${kappa}L${lambda}"
+    sed -i -e "s/#$ -N/#$ -N ${jobname}/g" $runfile
+    sed -i -e "s/exe infile outfile > logfile/SU2_adjoint ${infile_dummy}  /g" $runfile
+
+    ### Submit job ###
+    qsub $runfile
+
+    ### Clean up ###
+    rm $runfile
+done

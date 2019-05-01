@@ -1,0 +1,12 @@
+#SGE submission options
+#$ -q all.q                   # Select the serial queue
+#$ -l h_vmem=4G               # Max. virt. Mem. = 4G per slot/core
+#$ -cwd                       # Change to current working directory
+#$ -V                         # Export environment variables into script
+#$ -N
+
+# Move to the scratch directory
+cd /cl_tmp/afferran/MC_SU2_adjoint
+
+# Run the job
+./exe infile outfile > logfile

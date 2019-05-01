@@ -13,7 +13,7 @@
 /***************************/
 
 #The input function works this way:
- 
+
     inputf >> N; (lenght of the lattice)
     inputf >> b; (beta parameter of wilson action)
     inputf >> k; (hopping parameter)
