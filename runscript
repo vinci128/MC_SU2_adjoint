@@ -65,11 +65,7 @@
 
 #    val3=$((4+$value*3-3))
 #    lambda=${array[$val3]}
-
-for ((k =0; k <= 21; k++)); do
-
   beta = 4
-  kappa = 0.45 + 0.01*$k
   lambda =1
   therm = 1000
   meas = 1000
@@ -78,6 +74,12 @@ for ((k =0; k <= 21; k++)); do
   sm =0
   run =1
   alpha = 0.55
+
+for ((k =0; k <= 21; k++)); do
+
+
+  kappa = 0.45 + 0.01*$k
+
 
 
     ### Generate input file ###
