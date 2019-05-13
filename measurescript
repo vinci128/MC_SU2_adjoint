@@ -97,9 +97,9 @@ for ((k =0; k <= 20; k++)); do
     sed -i -e "s/MEAS_/${meas}/g" $infile
     sed -i -e "s/DEC_/${dec}/g" $infile
     sed -i -e "s/MH_/${mh}/g" $infile
-    sed -i -e "s/SM_/${lambda}/g" $infile
-    sed -i -e "s/RUN_/${lambda}/g" $infile
-    sed -i -e "s/ALPHA_/${lambda}/g" $infile
+    sed -i -e "s/SM_/${sm}/g" $infile
+    sed -i -e "s/RUN_/${run}/g" $infile
+    sed -i -e "s/ALPHA_/${alpha}/g" $infile
     ### Generate output file ###
 #    outfile="output_files\/output_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.dat"
 
