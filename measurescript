@@ -104,7 +104,7 @@ for ((k =0; k <= 20; k++)); do
 #    outfile="output_files\/output_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.dat"
 
     ### Generate log files
-#    logfile="log_files\/logfile_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.log"
+    logfile="log_files\/logfile_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.log"
 
     ### Generate runscripts ###
     runfile="clrun_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}"
@@ -112,7 +112,7 @@ for ((k =0; k <= 20; k++)); do
     cp clrun_temp $runfile
     jobname="measure_V${nx}x${ny}x${nz}x${nt}_B${beta}K${kappa}L${lambda}"
     sed -i -e "s/#$ -N/#$ -N ${jobname}/g" $runfile
-    sed -i -e "s/exe infile outfile > logfile/measure ${infile_dummy}  /g" $runfile
+    sed -i -e "s/exe infile outfile > logfile/measure ${infile_dummy} > ${logfile} /g" $runfile
 
     ### Submit job ###
     qsub $runfile
