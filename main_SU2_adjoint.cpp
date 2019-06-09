@@ -30,9 +30,7 @@ int main(int argc, char *argv[]){
 for (int j =0; j < argc; j++){
 std::cout << argv[j] << std::endl;
 }
-// Opening of the files for the log
-std::ofstream logf;
-logf.open ("log.dat");
+
 
 
 // We read the parameters from the input file
@@ -67,6 +65,12 @@ int n_run = in.run;
 
 char gauge_name[128];
 char adjoint_name[128];
+
+// Opening of the files for the log
+std::ofstream logf;
+char log_name[128];
+sprintf(log_name,"log_files/log_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+logf.open (log_name);
 
 // Random number generator initialization
 
