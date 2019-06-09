@@ -153,10 +153,10 @@ SC1_t(SC1);
 SC2_t(SC2);
 SC3_t(SC3);
 
-O1minusf.write( (char*)&B_p, sizeof(B_p));
-O1minusf.write( (char*)&T1, sizeof(T1));
-O1minusf.write( (char*)&T2, sizeof(T2));
-O1minusf.write( (char*)&T3, sizeof(T3));
+O1minusf.write((char*)&B_p, sizeof(B_p));
+O1minusf.write((char*)&T1, sizeof(T1));
+O1minusf.write((char*)&T2, sizeof(T2));
+O1minusf.write((char*)&T3, sizeof(T3));
 
 O0plusf.write((char*)&SC1,sizeof(SC1));
 O0plusf.write((char*)&SC2,sizeof(SC2));
@@ -228,6 +228,21 @@ U_copy(U,U_old);
 phi_copy(phi,phi_old);
 
 }
+
+
+// free dynamically allocated memory
+for( int i = 0 ; i < V ; i++ )
+{
+    delete[] U_old[i]; // delete array within matrix
+    delete[] phi_old[i];
+}
+// delete actual matrix
+delete[] U_old;
+delete[] phi_old;
+
+dealloc_fields();
+
+// close files
 
 plaqf.close();
 phif.close();

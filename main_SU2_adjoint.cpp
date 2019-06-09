@@ -104,6 +104,11 @@ write_adjoint_field(adjoint_name);
 
 }
 
+
+dealloc_fields();
+
+logf << "Arrays deallocated \n";
+
 logf << "Exiting program \n";
 logf.close();
 

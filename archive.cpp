@@ -76,6 +76,31 @@ void alloc_fields(){
 }
 }
 
+void dealloc_fields(){
+
+  for(int i = 0; i < V; ++i){
+      delete[] U[i];
+      delete[] U_smear[i];
+      delete[] U_new[i];
+      delete[] X[i];
+
+      delete[] phi[i];
+      delete[] phi_smear[i];
+      delete[] phi_new[i];
+}
+
+   delete[]  U;
+   delete[] U_smear;
+   delete[] U_new;
+   delete[] X;
+
+   delete[] phi;
+   delete[] phi_smear;
+   delete[] phi_new;
+
+
+}
+
 
 void write_adjoint_field(char filename[]){
 

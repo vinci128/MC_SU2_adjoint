@@ -17,6 +17,7 @@
 
 void read_input(char *argv[]);
 void alloc_fields();
+void dealloc_fields();
 
 void write_adjoint_field(char filename[]);
 void write_gauge_field(char filename[]);
