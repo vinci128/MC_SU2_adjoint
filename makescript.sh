@@ -2,6 +2,7 @@ mkdir conf
 mkdir adj_conf
 mkdir O1minus_output_files
 mkdir O0plus_output_files
+mkdir log_files
 mkdir obs
 g++ -Wall -g -c ranlxd.c
 g++ -Wall -g -c geometry.cpp

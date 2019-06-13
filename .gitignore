@@ -2,6 +2,7 @@ conf/
 adj_conf/
 obs/
 input_files/
+log_files/
 log.dat
 out
 plaq.dat
@@ -11,3 +12,5 @@ output_file
 main_SU2_adjoint.sublime-workspace
 O0plus_output_files/
 O1minus_output_files/
+phi
+plaq

@@ -70,8 +70,8 @@ char adjoint_name[128];
   char O1minus_name[128];
   char O0plus_name[128];
 
-  char plaq_name[128];
-  char phi_name[128];
+//  char plaq_name[128];
+//  char phi_name[128];
 
   //double B[Nt][3];
 
@@ -98,10 +98,10 @@ char adjoint_name[128];
   std::ofstream O0plusf;
   O0plusf.open(O0plus_name,std::ios::out|std::ios::binary);
 
-  std::ofstream plaqf;
-  plaqf.open (plaq_name);
-  std::ofstream phif;
-  phif.open (phi_name);
+//  std::ofstream plaqf;
+//  plaqf.open (plaq_name);
+//  std::ofstream phif;
+//  phif.open (phi_name);
 
   su2_x **U_old = new su2_x*[V];
   double **phi_old = new double*[V];
@@ -135,8 +135,8 @@ phi_copy(phi_old,phi);
 U_copy(U_smear,U);
 phi_copy(phi_smear,phi);
 
-plaqf << "no_smear: "<< avr_plaquette()  << "\n";
-phif  << "no_smear: " << phi_sq()  <<"\n";
+//plaqf << "no_smear: "<< avr_plaquette()  << "\n";
+//phif  << "no_smear: " << phi_sq()  <<"\n";
 
 std::cout << "plaq:" << "no_smear: "<< avr_plaquette()  << "\n";
 std::cout << "phi:"  << "no_smear: " << phi_sq()  <<"\n";
@@ -172,8 +172,8 @@ for(int k =0; k < n_smear; k++){
 APE_smearing(U_smear,U, alpha);
 APE_smearing_scalar(phi_smear,phi,U);
 
-plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
-phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
+//plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
+//phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
 B_z_t(B_p);
 T1m_t(T1);
@@ -244,8 +244,8 @@ dealloc_fields();
 
 // close files
 
-plaqf.close();
-phif.close();
+//plaqf.close();
+//phif.close();
 
 O1minusf.close();
 O0plusf.close();

@@ -7,6 +7,7 @@
 #include "global.h"
 #include "geometry.h"
 #include "update.h"
+#include "archive.h"
 #include "su2.h"
 
 #define M_PI 3.14159265358979323846
@@ -77,6 +78,20 @@ r[3]= r[3]*N;
 
 }
 
+void checkpoint_start(){
+
+char g_name[128];
+char ad_name[128];
+
+
+  sprintf(g_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
+  sprintf(ad_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
+
+  read_gauge_field(g_name);
+  read_adjoint_field(ad_name);
+
+
+}
 
 void gauge_update(int s, int mu,double eps){
 

@@ -1,14 +1,15 @@
-4
-4
-0.55
-1
-100
-100
+8
+1.5
+0.2892
+0.0011
+0
+50
 10
 5
-1
+0
 1
 0.55
+9999
 
 /***************************/
 
@@ -25,5 +26,5 @@
     inputf >> sm; (number of smearing levels)
     inputf >> run; (number of the run, distinguishes configurations)
     inputf  >> alpha; (alpha parameter of the smearing)
-
+    inputf >> start; (starting configuration number; cold start with zero)
 /**************************/

@@ -13,6 +13,7 @@
 
 void cold_start();
 void hot_start();
+void checkpoint_start();
 
 su2_x staple(int s, int mu);
 su2_x staple_in(su2_x **in,int s, int mu);

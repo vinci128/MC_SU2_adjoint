@@ -69,7 +69,7 @@ char adjoint_name[128];
 // Opening of the files for the log
 std::ofstream logf;
 char log_name[128];
-sprintf(log_name,"log_files/log_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+sprintf(log_name,"log_files/log_run%d_%dx%dx%dx%db%fk%fl%f",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda );
 logf.open (log_name);
 
 // Random number generator initialization
@@ -77,9 +77,13 @@ logf.open (log_name);
 rlxd_init(1, 12435);
 
 // Initialize the fields
-
-cold_start();
-
+if(in.start ==0){
+  cold_start();
+  logf << "Cold start\n";
+} else{
+  checkpoint_start();
+  logf << "Start from configuration " << in.start << std::endl;
+}
 
 logf << "Field initialized \n";
 
@@ -94,7 +98,8 @@ logf << "Thermalization completed" << std::endl;
 
 
 // Generation of configurations
-for(int i=0;i< n_meas;i++){
+int n_final = in.start + n_meas;
+for(int i=in.start;i<n_final; i++){
 cycle(5,multihit,1,n_decorr,logf);
 
 sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
