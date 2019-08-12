@@ -1,0 +1,78 @@
+#!/bin/bash
+
+################################################################################
+# Script       : runscript
+# Author       : V. Afferrante
+# E-Mail       : vincenzo.afferrante@uni-graz.at
+# Created      : 1/05/2019
+# Last modified: 1/05/2019
+# Description  : Script to submit n jobs characterised from the nrun parameter.
+# Execute with : runscript "file_with_random_couplings"
+################################################################################
+
+#
+    mkdir input_files
+
+ nx=$1
+ ny=${nx}
+ nz=${nx}
+ nt=${nx}
+
+  beta=4
+  lambda=1
+  kappa = $2
+  therm=1000
+  meas=$4
+  dec=50
+  mh=5
+  sm=0
+  #run=1
+  alpha=0.55
+  start=$3
+
+for ((n =1; n <= $5; n++)); do
+
+
+  run=${n}
+
+
+
+    ### Generate input file ###
+
+    infile="input_files/input_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.in"
+    cp input_temp $infile
+    sed -i -e "s/N_/${nx}/g" $infile
+    #sed -i -e "s/N_NY/${ny}/g" $infile
+    #sed -i -e "s/N_NZ/${nz}/g" $infile
+    #sed -i -e "s/N_NT/${nt}/g" $infile
+    sed -i -e "s/B_/${beta}/g" $infile
+    sed -i -e "s/K_/${kappa}/g" $infile
+    sed -i -e "s/L_/${lambda}/g" $infile
+    sed -i -e "s/TH_/${therm}/g" $infile
+    sed -i -e "s/MEAS_/${meas}/g" $infile
+    sed -i -e "s/DEC_/${dec}/g" $infile
+    sed -i -e "s/MH_/${mh}/g" $infile
+    sed -i -e "s/SM_/${sm}/g" $infile
+    sed -i -e "s/RU_/${run}/g" $infile
+    sed -i -e "s/ALPHA_/${alpha}/g" $infile
+    sed -i -e "s/START_/${start}/g" $infile
+    ### Generate output file ###
+#    outfile="output_files\/output_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.dat"
+
+    ### Generate log files
+#    logfile="log_files\/logfile_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.log"
+
+    ### Generate runscripts ###
+    runfile="clrun_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}"
+    infile_dummy="input_files\/input_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.in"
+    cp clrun_temp $runfile
+    jobname="Run${run}V${nx}x${ny}x${nz}x${nt}_B${beta}K${kappa}L${lambda}"
+    sed -i -e "s/#$ -N/#$ -N ${jobname}/g" $runfile
+    sed -i -e "s/exe infile outfile > logfile/SU2_adjoint ${infile_dummy}  /g" $runfile
+
+    ### Submit job ###
+    qsub $runfile
+
+    ### Clean up ###
+    rm $runfile
+done

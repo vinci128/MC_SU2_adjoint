@@ -88,8 +88,8 @@ char adjoint_name[128];
   sprintf(O1minus_name,"O1minus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
   sprintf(O0plus_name,"O0plus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
-  sprintf(plaq_name,"obs/plaq_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
-  sprintf(phi_name,"obs/phi_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+  //sprintf(plaq_name,"obs/plaq_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+  //sprintf(phi_name,"obs/phi_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
 
   std::ofstream O1minusf;
