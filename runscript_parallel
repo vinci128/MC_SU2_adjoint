@@ -21,7 +21,7 @@
   beta=4
   lambda=1
   kappa=$2
-  therm=1000
+  therm=0
   meas=$4
   dec=50
   mh=5
