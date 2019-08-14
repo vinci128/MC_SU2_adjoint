@@ -43,8 +43,9 @@ double **phi_new;
     inputf >> mhit;
     inputf >> sm;
     inputf >> run;
-    inputf  >> alpha;
+    inputf >> alpha;
     inputf >> start;
+    inputf >> init;
     }
 
         inputf.close();

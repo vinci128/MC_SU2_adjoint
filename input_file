@@ -25,6 +25,8 @@
     inputf >> mhit; (number of multihits)
     inputf >> sm; (number of smearing levels)
     inputf >> run; (number of the run, distinguishes configurations)
-    inputf  >> alpha; (alpha parameter of the smearing)
+    inputf >> alpha; (alpha parameter of the smearing)
     inputf >> start; (starting configuration number; cold start with zero)
+    inputf >> init; (random numbers generator seed)
+
 /**************************/

@@ -74,7 +74,7 @@ logf.open (log_name);
 
 // Random number generator initialization
 
-rlxd_init(1, 12435);
+rlxd_init(1, in.init);
 
 // Initialize the fields
 if(in.start ==0){

@@ -25,6 +25,7 @@ public:
   int run;
   double alpha;
   int start;
+  int init;
 
 void read(char *argv[]);
 

@@ -34,6 +34,7 @@ for ((n =1; n <= $5; n++)); do
 
 
   run=${n}
+  init=${n}
 
 
 
@@ -56,6 +57,7 @@ for ((n =1; n <= $5; n++)); do
     sed -i -e "s/RU_/${run}/g" $infile
     sed -i -e "s/ALPHA_/${alpha}/g" $infile
     sed -i -e "s/START_/${start}/g" $infile
+    sed -i -e "s/INIT_/${init}/g" $infile
     ### Generate output file ###
 #    outfile="output_files\/output_Nx${nx}Ny${ny}Nz${nz}Nt${nt}_B${beta}_K${kappa}_L${lambda}.dat"
 
