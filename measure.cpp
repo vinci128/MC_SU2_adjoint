@@ -77,9 +77,9 @@ char adjoint_name[128];
 
   double B_p[Nt][3];
 
-  double T1[Nt][3];
-  double T2[Nt][3];
-  double T3[Nt][3];
+  double B2[Nt][3];
+  double B_2p[Nt][3];
+  double Bphi[Nt][3];
 
   double SC1[Nt];
   double SC2[Nt];
@@ -145,18 +145,25 @@ std::cout << "phi:"  << "no_smear: " << phi_sq()  <<"\n";
 
 //B_t(B);
 B_z_t(B_p);
-T1m_t(T1);
-T2m_t(T2);
-T3m_t(T3);
+//T1m_t(T1);
+//T2m_t(T2);
+//T3m_t(T3);
+B2_z_t(B2);
+B_2z_t(B_2p);
+Bphi_z_t(Bphi);
 
 SC1_t(SC1);
 SC2_t(SC2);
 SC3_t(SC3);
 
 O1minusf.write((char*)&B_p, sizeof(B_p));
-O1minusf.write((char*)&T1, sizeof(T1));
-O1minusf.write((char*)&T2, sizeof(T2));
-O1minusf.write((char*)&T3, sizeof(T3));
+//O1minusf.write((char*)&T1, sizeof(T1));
+//O1minusf.write((char*)&T2, sizeof(T2));
+//O1minusf.write((char*)&T3, sizeof(T3));
+
+O1minusf.write((char*)&B2, sizeof(B2));
+O1minusf.write((char*)&Bphi, sizeof(Bphi));
+O1minusf.write((char*)&B_2p, sizeof(B_2p));
 
 O0plusf.write((char*)&SC1,sizeof(SC1));
 O0plusf.write((char*)&SC2,sizeof(SC2));
@@ -176,18 +183,25 @@ APE_smearing_scalar(phi_smear,phi,U);
 //phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
 B_z_t(B_p);
-T1m_t(T1);
-T2m_t(T2);
-T3m_t(T3);
+//T1m_t(T1);
+//T2m_t(T2);
+//T3m_t(T3);
+B2_z_t(B2);
+B_2z_t(B_2p);
+Bphi_z_t(Bphi);
 
 SC1_t(SC1);
 SC2_t(SC2);
 SC3_t(SC3);
 
 O1minusf.write( (char*)&B_p, sizeof(B_p));
-O1minusf.write( (char*)&T1, sizeof(T1));
-O1minusf.write( (char*)&T2, sizeof(T2));
-O1minusf.write( (char*)&T3, sizeof(T3));
+//O1minusf.write( (char*)&T1, sizeof(T1));
+//O1minusf.write( (char*)&T2, sizeof(T2));
+//O1minusf.write( (char*)&T3, sizeof(T3));
+
+O1minusf.write((char*)&B2, sizeof(B2));
+O1minusf.write((char*)&Bphi, sizeof(Bphi));
+O1minusf.write((char*)&B_2p, sizeof(B_2p));
 
 
 /*

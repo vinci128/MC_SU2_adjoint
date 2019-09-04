@@ -315,10 +315,10 @@ void B_t(double O[][3]){
 
 				int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
 				phi2=0;
-for (int a = 0; a < Ng; ++a)
-{
-phi2 += phi_smear[s][a]*phi_smear[s][a];
-}
+				for (int a = 0; a < Ng; ++a)
+					{
+						phi2 += phi_smear[s][a]*phi_smear[s][a];
+					}
 
 
 				phip[0] = phi_plaq_smear(s,1,2);
@@ -387,7 +387,167 @@ phi2 += phi_smear[s][a]*phi_smear[s][a];
 
 }
 
+void B2_z_t(double O[][3]){
 
+	//suNg_algebra_vector Phic;
+	//double corr = 0;
+	//double SC1 = 0;
+	//double O[8] ={0};
+	double phi2;
+	double phip[3];
+	vec p_z;
+	double omega;
+p_z.v[0]=0;
+p_z.v[1]=0;
+p_z.v[2]=2*M_PI/Nz;
+			//printf(" Length at point %i: %1.8e\n", ix, Phi_sq );
+vec r ;
+	int t, x, y, z;
+	for (t=0; t<Nt; t++) {
+
+O[t][0]=0;
+O[t][1]=0;
+O[t][2]=0;
+
+
+			for (z=0; z<Nz; z++) {
+			for (y=0; y<Ny; y++) {
+			for (x=0; x<Nx; x++) {
+r.v[0] =x;
+r.v[1] =y;
+r.v[2] =z;
+
+_sc_prod(omega,r,p_z);
+
+				int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
+				phi2=0;
+for (int a = 0; a < Ng; ++a)
+{
+phi2 += phi_smear[s][a]*phi_smear[s][a];
+}
+
+
+				phip[0] = phi_plaq_smear(s,1,2)*phi_plaq_smear(s,1,2);
+				phip[1] = phi_plaq_smear(s,2,0)*phi_plaq_smear(s,2,0);
+				phip[2] = phi_plaq_smear(s,0,1)*phi_plaq_smear(s,0,1);
+
+				for (int i = 0; i < 3; i++) {
+					O[t][i] += phip[i]/sqrt(Nx*Ny*Nz*phi2)*cos(omega);
+
+
+				}
+		}}}
+	}
+
+}
+
+void Bphi_z_t(double O[][3]){
+
+	//suNg_algebra_vector Phic;
+	//double corr = 0;
+	//double SC1 = 0;
+	//double O[8] ={0};
+	double phi2;
+	double phip[3];
+	vec p_z;
+	double omega;
+p_z.v[0]=0;
+p_z.v[1]=0;
+p_z.v[2]=2*M_PI/Nz;
+			//printf(" Length at point %i: %1.8e\n", ix, Phi_sq );
+vec r ;
+	int t, x, y, z;
+	for (t=0; t<Nt; t++) {
+
+O[t][0]=0;
+O[t][1]=0;
+O[t][2]=0;
+
+
+			for (z=0; z<Nz; z++) {
+			for (y=0; y<Ny; y++) {
+			for (x=0; x<Nx; x++) {
+r.v[0] =x;
+r.v[1] =y;
+r.v[2] =z;
+
+_sc_prod(omega,r,p_z);
+
+				int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
+				phi2=0;
+for (int a = 0; a < Ng; ++a)
+{
+phi2 += phi_smear[s][a]*phi_smear[s][a];
+}
+
+
+				phip[0] = phi2*phi_plaq_smear(s,1,2);
+				phip[1] = phi2*phi_plaq_smear(s,2,0);
+				phip[2] = phi2*phi_plaq_smear(s,0,1);
+
+				for (int i = 0; i < 3; i++) {
+					O[t][i] += phip[i]/sqrt(Nx*Ny*Nz*phi2)*cos(omega);
+
+
+				}
+		}}}
+	}
+
+}
+
+void B_2z_t(double O[][3]){
+
+	//suNg_algebra_vector Phic;
+	//double corr = 0;
+	//double SC1 = 0;
+	//double O[8] ={0};
+	double phi2;
+	double phip[3];
+	vec p_z;
+	double omega;
+p_z.v[0]=0;
+p_z.v[1]=0;
+p_z.v[2]=4*M_PI/Nz;
+			//printf(" Length at point %i: %1.8e\n", ix, Phi_sq );
+vec r ;
+	int t, x, y, z;
+	for (t=0; t<Nt; t++) {
+
+O[t][0]=0;
+O[t][1]=0;
+O[t][2]=0;
+
+
+			for (z=0; z<Nz; z++) {
+			for (y=0; y<Ny; y++) {
+			for (x=0; x<Nx; x++) {
+r.v[0] =x;
+r.v[1] =y;
+r.v[2] =z;
+
+_sc_prod(omega,r,p_z);
+
+				int s = x + Nx*y + Nx*Ny*z + Nx*Ny*Nz*t;
+				phi2=0;
+for (int a = 0; a < Ng; ++a)
+{
+phi2 += phi_smear[s][a]*phi_smear[s][a];
+}
+
+
+				phip[0] = phi_plaq_smear(s,1,2);
+				phip[1] = phi_plaq_smear(s,2,0);
+				phip[2] = phi_plaq_smear(s,0,1);
+
+				for (int i = 0; i < 3; i++) {
+					O[t][i] += phip[i]/sqrt(Nx*Ny*Nz*phi2)*cos(omega);
+
+
+				}
+		}}}
+	}
+
+}
 
 
 void W_t(double O[][6][6][6]){

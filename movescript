@@ -1,0 +1,16 @@
+import os
+
+Nrun=50
+Nmeas=100
+Start=200
+Start0=400
+k="0.450000"
+
+for nrun in list(range(1,Nrun)):
+    for n in list(range(Start,Start+Nmeas)):
+        conf_name = "conf/run"+str(nrun)+"1_32x32x32x32b4.000000k"+k+"l1.000000n"+str(n)
+        adj_conf_name = "adj_conf/adjoint_run"+str(nrun)+"1_4x4x4x4b4.000000k"+k+"l1.000000n"+str(n)
+        conf_0 = "conf/run0_4x4x4x4b4.000000k"+k+"l1.000000n"+str(Start0+Nmeas*Nrun*(n-Start))
+        adj_conf_0 = "adj_conf/adjoint_run0_4x4x4x4b4.000000k"+k+"l1.000000n"+str(Start0+Nmeas*Nrun*(n-Start))
+        os.rename(conf_name,conf_0)
+        os.rename(adj_conf_name, adj_conf_0)
