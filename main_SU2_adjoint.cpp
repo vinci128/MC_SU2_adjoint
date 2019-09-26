@@ -121,11 +121,11 @@ logf << "Arrays deallocated \n";
 logf << "Exiting program \n";
 logf.close();
 
-ofstream checkfile;
+std::ofstream checkfile;
 
 char checkname[64];
 sprintf(checkname,"test_run%d_k%f.out", in.run,kappa);
-checkfile.open();
+checkfile.open(checkname);
 
 checkfile << "ok \n";
 
