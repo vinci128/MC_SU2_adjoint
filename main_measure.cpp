@@ -58,9 +58,10 @@ int therm = in.th;
 int n_meas = in.meas;
 int n_decorr = in.decorr;
 int multihit = in.mhit;
-//int n_smear = in.sm;
+int n_smear = in.sm;
 int n_run = in.run;
-//double alpha = in.alpha;
+double alpha = in.alpha;
+int n_final = in.start + n_meas;
 // Filenames for configuration files
 
 char gauge_name[128];
@@ -81,7 +82,7 @@ double Bphi[Nt][3];
 
 
 
-sprintf(O1minus_name,"O1minus_output_files/output_run%d_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda );
+sprintf(O1minus_name,"O1minus_output_files/output_run%d_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f_n%d.bin",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,n_final );
 //sprintf(O0plus_name,"O0plus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
 std::ofstream O1minusf;
@@ -109,14 +110,7 @@ if(in.start ==0){
 logf << "Field initialized \n";
 
 
-su2_x **U_old = new su2_x*[V];
-double **phi_old = new double*[V];
 
-
-for(int i = 0; i < V; ++i){
-  U_old[i] = new su2_x[Nd];
-  phi_old[i] = new double[Ng];
-}
 
 logf << "Update start \n ";
 
@@ -126,9 +120,18 @@ cycle(5,multihit,1,therm,logf);
 // We use an adaptive algorithm for the update length
 logf << "Thermalization completed" << std::endl;
 
+su2_x **U_old = new su2_x*[V];
+double **phi_old = new double*[V];
+
+
+for(int i = 0; i < V; ++i){
+  U_old[i] = new su2_x[Nd];
+  phi_old[i] = new double[Ng];
+}
+
 
 // Generation of configurations for measurements
-int n_final = in.start + n_meas;
+
 for(int i=in.start;i<n_final; i++){
 cycle(5,multihit,1,n_decorr,logf);
 
@@ -192,8 +195,8 @@ delete[] phi_old;
 
 // Last configurations are saved
 
-sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
-sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,n_final );
+sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,n_final );
 
 logf << gauge_name << std::endl;
 logf << adjoint_name << std::endl;
