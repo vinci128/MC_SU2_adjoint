@@ -87,8 +87,8 @@ char ad_name[128];
 //  sprintf(g_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
 //  sprintf(ad_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
 
-  sprintf(g_name,"conf/run0_%dx%dx%dx%db%fk%fl%fn%d",Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
-  sprintf(ad_name,"adj_conf/adjoint_run0_%dx%dx%dx%db%fk%fl%fn%d",Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
+  sprintf(g_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
+  sprintf(ad_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",in.run,Nt,Nx,Ny,Nz, beta, kappa,lambda,in.start );
 
 
   read_gauge_field(g_name);

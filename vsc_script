@@ -1,0 +1,104 @@
+#!bin/bash
+
+kappa=( 0.45 0.52 0.55 0.6 0.65 )
+nmeas=10
+nrun=20
+nstart=1000
+n_restart=20
+
+
+beta=4
+lambda=1
+
+nx=24
+ny=${nx}
+nz=${nx}
+nt=${nx}
+
+### start new jobs ###
+
+for ((nr =1; n <= $n_restart; ns++));
+do
+
+  nstart=$(($nstart +$nr*$n_meas ))
+
+for k in "${kappa[@]}"
+do
+
+
+/bin/bash runscript_slurm 24 $k $nstart $nmeas $nrun
+
+done
+
+k=0
+nr=0
+### check if jobs are done, otherwise it waits
+while [k -lt 5]
+do
+while [nr -lt ${nrun}]
+do
+
+$kap=${kappa[$k]}
+
+testname="test_run${nr}_k${kap}.out"
+if [! -f testname]; then sleep 20s; fi
+if [ -f testname]; then nr=$(($nr +1)); fi
+
+done
+$k=$(($k+1))
+done
+
+
+### copy configuration on nashome ###
+
+scp -r conf/* vaf@143.50.77.166:MC_SU2_adjoint/conf
+scp -r adj_conf/* vaf@143.50.77.166:MC_SU2_adjoint/adj_conf
+
+### copy checkpoint configurations in a separate folder ###
+
+mkdir ckpoint
+
+n_ck=$(($nstart+ $nmeas ))
+
+for k in "${kappa[@]}"
+do
+for ((n =1; n <= $nrun; n++));
+do
+
+start_gauge="conf/run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+start_adj="adj_conf/adjoint_run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+
+ck_gauge="ckpoint/run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+ck_adj="ckpoint/adjoint_run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+
+cp start_gauge ck_gauge
+cp start_adj ck_adj
+
+done
+done
+
+### delete configurations ###
+
+rm -r conf/*
+rm -r adj_conf/*
+
+### copy checkpoint back to original folder ###
+
+for k in "${kappa[@]}"
+do
+for ((n =1; n <= $nrun; n++));
+do
+
+start_gauge="conf/run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+start_adj="adj_conf/adjoint_run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+
+ck_gauge="ckpoint/run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+ck_adj="ckpoint/adjoint_run${n}_${nx}x${ny}x${nz}x${nt}b${beta}k${kappa}l${lambda}n${n_ck}"
+
+cp ck_gauge start_gauge
+cp ck_adj start_adj
+
+done
+done
+
+done

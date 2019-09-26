@@ -14,3 +14,4 @@ g++ -Wall -g -c main_SU2_adjoint.cpp
 g++ -Wall -g -c measure.cpp
 g++ -Wall -g ranlxd.o geometry.o update.o APE_smearing.o observables.o archive.o main_SU2_adjoint.o -o SU2_adjoint -lm
 g++ -Wall -g ranlxd.o geometry.o update.o APE_smearing.o observables.o archive.o measure.o -o measure -lm
+g++ -Wall -g ranlxd.o geometry.o update.o APE_smearing.o observables.o archive.o measure.o -o main_measure -lm
