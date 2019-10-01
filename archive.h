@@ -22,8 +22,8 @@ void dealloc_fields();
 void write_adjoint_field(char filename[]);
 void write_gauge_field(char filename[]);
 
-void read_adjoint_field(char filename[]);
-void read_gauge_field(char filename[]);
+int read_adjoint_field(char filename[]);
+int read_gauge_field(char filename[]);
 
 void read_B(char *argv[], int n_smear);
 

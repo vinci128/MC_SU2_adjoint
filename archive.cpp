@@ -144,45 +144,52 @@ for(int s=0; s < V; s++ ){
 }
 
 
-void read_adjoint_field(char filename[]){
+int read_adjoint_field(char filename[]){
 
   ifstream infile;
   infile.open(filename, ios::binary | ios::in);
 	double buff;
 
+  if (infile.fail()){
+    printf("Failed to open file \n" );
+  infile.close();
+    return 1;
+  } else{
 for(int s=0; s < V; s++ ){
 	for(int a=0; a < Ng;a++){
-
-
 		infile.read((char*)&buff,sizeof(double));
 //    std::cout << "buff" << buff << '\n';
 phi[s][a] = buff;
 	}
 }
   infile.close();
-
+    return 0;
+}
 }
 
 
-void read_gauge_field(char filename[]){
+int read_gauge_field(char filename[]){
 
   ifstream infile;
   infile.open(filename, ios::binary | ios::in);
 
-for(int s=0; s < V; s++ ){
-	for(int mu=0; mu < Nd;mu++){
-		su2 Um;
+  if (infile.fail()){
+    printf("Failed to open file \n" );
+  infile.close();
+  return 1;
+  } else{
 
-
-		infile.read((char*)&Um,sizeof(su2));
-
-		_su2_x_project(U[s][mu],Um);
-
-	}
-}
+    for(int s=0; s < V; s++ ){
+	     for(int mu=0; mu < Nd;mu++){
+		        su2 Um;
+		        infile.read((char*)&Um,sizeof(su2));
+		        _su2_x_project(U[s][mu],Um);
+	     }
+    }
 
   infile.close();
-
+  return 0;
+  }
 }
 
 void read_B(char *argv[], int n_smear){

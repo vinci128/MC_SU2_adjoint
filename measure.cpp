@@ -68,7 +68,7 @@ char adjoint_name[128];
 
 
   char O1minus_name[128];
-  char O0plus_name[128];
+//  char O0plus_name[128];
 
 //  char plaq_name[128];
 //  char phi_name[128];
@@ -81,12 +81,12 @@ char adjoint_name[128];
   double B_2p[Nt][3];
   double Bphi[Nt][3];
 
-  double SC1[Nt];
-  double SC2[Nt];
-  double SC3[Nt];
+//  double SC1[Nt];
+//  double SC2[Nt];
+//  double SC3[Nt];
 
   sprintf(O1minus_name,"O1minus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
-  sprintf(O0plus_name,"O0plus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+//  sprintf(O0plus_name,"O0plus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
   //sprintf(plaq_name,"obs/plaq_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
   //sprintf(phi_name,"obs/phi_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
@@ -95,8 +95,8 @@ char adjoint_name[128];
   std::ofstream O1minusf;
   O1minusf.open(O1minus_name,std::ios::out|std::ios::binary);
 
-  std::ofstream O0plusf;
-  O0plusf.open(O0plus_name,std::ios::out|std::ios::binary);
+//  std::ofstream O0plusf;
+//  O0plusf.open(O0plus_name,std::ios::out|std::ios::binary);
 
 //  std::ofstream plaqf;
 //  plaqf.open (plaq_name);
@@ -112,18 +112,30 @@ for(int i = 0; i < V; ++i){
     phi_old[i] = new double[Ng];
 }
 // Calculation of the length, average plaquette and spectroscopical observables
-for(int i=0;i< n_meas;i++){
 
+  int n_final = in.start + n_meas;
+for(int nr =30; nr < n_run+30; n_run++ ){
 
+for(int i=in.start;i< n_final;i++){
 
-  sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
-  sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",n_run,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+  bool gauge_check,adjoint_check;
+  gauge_check = false;
+  adjoint_check = false;
+  sprintf(gauge_name,"conf/run%d_%dx%dx%dx%db%fk%fl%fn%d",nr,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
+  sprintf(adjoint_name,"adj_conf/adjoint_run%d_%dx%dx%dx%db%fk%fl%fn%d",nr,Nt,Nx,Ny,Nz, beta, kappa,lambda,i );
 
   std::cout << gauge_name << '\n';
   std::cout << adjoint_name << '\n';
 
-  read_gauge_field(gauge_name);
-  read_adjoint_field(adjoint_name);
+  gauge_check = read_gauge_field(gauge_name);
+  adjoint_check = read_adjoint_field(adjoint_name);
+  printf("%d\n", gauge_check);
+  printf("%d\n", adjoint_check);
+
+  if (gauge_check || adjoint_check ){
+    printf("Configuration not found, skipping it.\n" );
+    continue;
+  }
 
   printf("configuration read n: " );
   printf("%d\n",i );
@@ -152,9 +164,9 @@ B2_z_t(B2);
 B_2z_t(B_2p);
 Bphi_z_t(Bphi);
 
-SC1_t(SC1);
-SC2_t(SC2);
-SC3_t(SC3);
+//SC1_t(SC1);
+//SC2_t(SC2);
+//SC3_t(SC3);
 
 O1minusf.write((char*)&B_p, sizeof(B_p));
 //O1minusf.write((char*)&T1, sizeof(T1));
@@ -165,9 +177,9 @@ O1minusf.write((char*)&B2, sizeof(B2));
 O1minusf.write((char*)&Bphi, sizeof(Bphi));
 O1minusf.write((char*)&B_2p, sizeof(B_2p));
 
-O0plusf.write((char*)&SC1,sizeof(SC1));
-O0plusf.write((char*)&SC2,sizeof(SC2));
-O0plusf.write((char*)&SC3,sizeof(SC3));
+//O0plusf.write((char*)&SC1,sizeof(SC1));
+//O0plusf.write((char*)&SC2,sizeof(SC2));
+//O0plusf.write((char*)&SC3,sizeof(SC3));
 
 
 
@@ -190,9 +202,9 @@ B2_z_t(B2);
 B_2z_t(B_2p);
 Bphi_z_t(Bphi);
 
-SC1_t(SC1);
-SC2_t(SC2);
-SC3_t(SC3);
+//SC1_t(SC1);
+//SC2_t(SC2);
+//SC3_t(SC3);
 
 O1minusf.write( (char*)&B_p, sizeof(B_p));
 //O1minusf.write( (char*)&T1, sizeof(T1));
@@ -218,9 +230,9 @@ for(int t = 0; t < Nt; t++) {
 */
 
 
-O0plusf.write((char*)&SC1,sizeof(SC1));
-O0plusf.write((char*)&SC2,sizeof(SC2));
-O0plusf.write((char*)&SC3,sizeof(SC3));
+//O0plusf.write((char*)&SC1,sizeof(SC1));
+//O0plusf.write((char*)&SC2,sizeof(SC2));
+//O0plusf.write((char*)&SC3,sizeof(SC3));
 
 /*
 
@@ -242,6 +254,7 @@ U_copy(U,U_old);
 phi_copy(phi,phi_old);
 
 }
+}
 
 
 // free dynamically allocated memory
@@ -262,6 +275,6 @@ dealloc_fields();
 //phif.close();
 
 O1minusf.close();
-O0plusf.close();
+//O0plusf.close();
 
 }
