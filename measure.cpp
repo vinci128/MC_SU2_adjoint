@@ -106,7 +106,7 @@ char adjoint_name[128];
   su2_x **U_old = new su2_x*[V];
   double **phi_old = new double*[V];
 
-
+//#pragma omp parallel for
 for(int i = 0; i < V; ++i){
     U_old[i] = new su2_x[Nd];
     phi_old[i] = new double[Ng];
@@ -114,7 +114,7 @@ for(int i = 0; i < V; ++i){
 // Calculation of the length, average plaquette and spectroscopical observables
 
   int n_final = in.start + n_meas;
-for(int nr =30; nr < n_run+30; n_run++ ){
+for(int nr =0; nr < n_run; nr++ ){
 
 for(int i=in.start;i< n_final;i++){
 

@@ -9,6 +9,7 @@
 #include "update.h"
 #include "su2.h"
 #include "observables.h"
+#include "<omp.h>"
 
 double plaquette(int s, int mu,int nu){
 
@@ -77,9 +78,10 @@ return plaq;
 double avr_plaquette(){
 
 double plaq_average=0;
-double plaq=0;
 
+#pragma omp parallel for simd reduction(+:plaq_average)
 for (int s = 0; s < V; s++) {
+	double plaq=0;
 for (int nu = 0; nu < Nd; nu++) {
 for( int mu =0 ; mu < nu; mu++){
 
@@ -125,7 +127,7 @@ return plaq_average;
 double phi_sq(){
 
 double phi_average=0;
-
+#pragma omp parallel for simd reduction(+:phi_average)
 for (int s = 0; s < V; s++) {
    for(int a = 0; a < Ng; a++){
 

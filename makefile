@@ -1,4 +1,4 @@
-CXXFLAGS =  -O3  -Wall -march=native -lm -I.
+CXXFLAGS =  -O3 -fopenmp  -Wall -march=native -lm -I.
 
 SU2_adjoint: ranlxd.o geometry.o update.o APE_smearing.o observables.o archive.o main_measure.o measure.o main_SU2_adjoint.o
 	g++ $(CXXFLAGS) ranlxd.o geometry.o update.o APE_smearing.o observables.o archive.o main_SU2_adjoint.o -o SU2_adjoint -lm
