@@ -67,41 +67,41 @@ char adjoint_name[128];
 
 
 
-  char O1minus_name[128];
+  // char O1minus_name[128];
 //  char O0plus_name[128];
 
-//  char plaq_name[128];
-//  char phi_name[128];
+ char plaq_name[128];
+ char phi_name[128];
 
   //double B[Nt][3];
 
-  double B_p[Nt][3];
-
-  double B2[Nt][3];
-  double B_2p[Nt][3];
-  double Bphi[Nt][3];
+  // double B_p[Nt][3];
+  //
+  // double B2[Nt][3];
+  // double B_2p[Nt][3];
+  // double Bphi[Nt][3];
 
 //  double SC1[Nt];
 //  double SC2[Nt];
 //  double SC3[Nt];
 
-  sprintf(O1minus_name,"O1minus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+  // sprintf(O1minus_name,"O1minus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 //  sprintf(O0plus_name,"O0plus_output_files/output_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.bin",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
-  //sprintf(plaq_name,"obs/plaq_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
-  //sprintf(phi_name,"obs/phi_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+  sprintf(plaq_name,"obs/plaq_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
+  sprintf(phi_name,"obs/phi_Nt%d_Nx%d_Ny%d_Nz%d_B%f_K%f_L%f.dat",Nt,Nx,Ny,Nz, beta, kappa,lambda );
 
 
-  std::ofstream O1minusf;
-  O1minusf.open(O1minus_name,std::ios::out|std::ios::binary);
+  // std::ofstream O1minusf;
+  // O1minusf.open(O1minus_name,std::ios::out|std::ios::binary);
 
 //  std::ofstream O0plusf;
 //  O0plusf.open(O0plus_name,std::ios::out|std::ios::binary);
 
-//  std::ofstream plaqf;
-//  plaqf.open (plaq_name);
-//  std::ofstream phif;
-//  phif.open (phi_name);
+ std::ofstream plaqf;
+ plaqf.open (plaq_name);
+ std::ofstream phif;
+ phif.open (phi_name);
 
   su2_x **U_old = new su2_x*[V];
   double **phi_old = new double*[V];
@@ -147,35 +147,35 @@ phi_copy(phi_old,phi);
 U_copy(U_smear,U);
 phi_copy(phi_smear,phi);
 
-//plaqf << "no_smear: "<< avr_plaquette()  << "\n";
-//phif  << "no_smear: " << phi_sq()  <<"\n";
+plaqf << "no_smear: "<< avr_plaquette()  << "\n";
+phif  << "no_smear: " << phi_sq()  <<"\n";
 
-std::cout << "plaq:" << "no_smear: "<< avr_plaquette()  << "\n";
-std::cout << "phi:"  << "no_smear: " << phi_sq()  <<"\n";
+// std::cout << "plaq:" << "no_smear: "<< avr_plaquette()  << "\n";
+// std::cout << "phi:"  << "no_smear: " << phi_sq()  <<"\n";
 
 
 
 //B_t(B);
-B_z_t(B_p);
+// B_z_t(B_p);
 //T1m_t(T1);
 //T2m_t(T2);
 //T3m_t(T3);
-B2_z_t(B2);
-B_2z_t(B_2p);
-Bphi_z_t(Bphi);
+// B2_z_t(B2);
+// B_2z_t(B_2p);
+// Bphi_z_t(Bphi);
 
 //SC1_t(SC1);
 //SC2_t(SC2);
 //SC3_t(SC3);
 
-O1minusf.write((char*)&B_p, sizeof(B_p));
+// O1minusf.write((char*)&B_p, sizeof(B_p));
 //O1minusf.write((char*)&T1, sizeof(T1));
 //O1minusf.write((char*)&T2, sizeof(T2));
 //O1minusf.write((char*)&T3, sizeof(T3));
 
-O1minusf.write((char*)&B2, sizeof(B2));
-O1minusf.write((char*)&Bphi, sizeof(Bphi));
-O1minusf.write((char*)&B_2p, sizeof(B_2p));
+// O1minusf.write((char*)&B2, sizeof(B2));
+// O1minusf.write((char*)&Bphi, sizeof(Bphi));
+// O1minusf.write((char*)&B_2p, sizeof(B_2p));
 
 //O0plusf.write((char*)&SC1,sizeof(SC1));
 //O0plusf.write((char*)&SC2,sizeof(SC2));
@@ -191,29 +191,29 @@ for(int k =0; k < n_smear; k++){
 APE_smearing(U_smear,U, alpha);
 APE_smearing_scalar(phi_smear,phi,U);
 
-//plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
-//phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
+plaqf << "sm_level:" << k << " " << avr_plaquette_smear()  << "\n";
+phif  << "sm_level:" << k << " " << phi_sq_smear()  <<"\n";
 
-B_z_t(B_p);
+// B_z_t(B_p);
 //T1m_t(T1);
 //T2m_t(T2);
 //T3m_t(T3);
-B2_z_t(B2);
-B_2z_t(B_2p);
-Bphi_z_t(Bphi);
+// B2_z_t(B2);
+// B_2z_t(B_2p);
+// Bphi_z_t(Bphi);
 
 //SC1_t(SC1);
 //SC2_t(SC2);
 //SC3_t(SC3);
 
-O1minusf.write( (char*)&B_p, sizeof(B_p));
+// O1minusf.write( (char*)&B_p, sizeof(B_p));
 //O1minusf.write( (char*)&T1, sizeof(T1));
 //O1minusf.write( (char*)&T2, sizeof(T2));
 //O1minusf.write( (char*)&T3, sizeof(T3));
 
-O1minusf.write((char*)&B2, sizeof(B2));
-O1minusf.write((char*)&Bphi, sizeof(Bphi));
-O1minusf.write((char*)&B_2p, sizeof(B_2p));
+// O1minusf.write((char*)&B2, sizeof(B2));
+// O1minusf.write((char*)&Bphi, sizeof(Bphi));
+// O1minusf.write((char*)&B_2p, sizeof(B_2p));
 
 
 /*
@@ -271,10 +271,10 @@ dealloc_fields();
 
 // close files
 
-//plaqf.close();
-//phif.close();
+plaqf.close();
+phif.close();
 
-O1minusf.close();
+// O1minusf.close();
 //O0plusf.close();
 
 }
