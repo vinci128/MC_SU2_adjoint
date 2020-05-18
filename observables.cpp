@@ -9,7 +9,7 @@
 #include "update.h"
 #include "su2.h"
 #include "observables.h"
-#include "<omp.h>"
+#include <omp.h>
 
 double plaquette(int s, int mu,int nu){
 
